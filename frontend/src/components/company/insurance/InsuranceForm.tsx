@@ -86,7 +86,7 @@ export default function InsuranceForm() {
 
   const navigate = useNavigate();
 
-  const URL = "https://carborn.site/api/insurance";
+  // const URL = "https://carborn.site/api/insurance";
 
   const ObjString: any = localStorage.getItem("login-token");
   const option = {
@@ -101,29 +101,29 @@ export default function InsuranceForm() {
     timer: 1500,
     timerProgressBar: true,
   });
-  const fileUpLoadAPI = async (data: FormData) => {
-    return fetch(URL, {
-      method: "post",
-      body: data,
-      ...option,
-    }).then((res) => {
-      console.log(res.ok);
-      if (res.ok) {
-        Toast.fire({
-          icon: "success",
-          title: "등록이 성공적으로 완료됐습니다.",
-          didClose: () => navigate("/insurance"),
-        });
-      } else {
-        Toast.fire({
-          icon: "error",
-          title: "등록되지 않은 차대번호 입니다.",
-        });
-      }
-    });
-  };
+  // const fileUpLoadAPI = async (data: FormData) => {
+  //   return fetch(URL, {
+  //     method: "post",
+  //     body: data,
+  //     ...option,
+  //   }).then((res) => {
+  //     console.log(res.ok);
+  //     if (res.ok) {
+  //       Toast.fire({
+  //         icon: "success",
+  //         title: "등록이 성공적으로 완료됐습니다.",
+  //         didClose: () => navigate("/insurance"),
+  //       });
+  //     } else {
+  //       Toast.fire({
+  //         icon: "error",
+  //         title: "등록되지 않은 차대번호 입니다.",
+  //       });
+  //     }
+  //   });
+  // };
 
-  const { mutate } = useMutation(fileUpLoadAPI, {
+  // const { mutate } = useMutation(fileUpLoadAPI, {
     // onSuccess: () => {
     //   Toast.fire({
     //     icon: "success",
@@ -131,7 +131,7 @@ export default function InsuranceForm() {
     //     // didClose: () => navigate("/insurance"),
     //   });
     // },
-  });
+  // });
 
   const submit = () => {
     const formData = new FormData();
@@ -148,14 +148,14 @@ export default function InsuranceForm() {
     console.log(category);
     console.log(content);
 
-    if (reciptImageFile && content && selectTime && carVin) {
-      mutate(formData);
-    } else {
-      Toast.fire({
-        icon: "error",
-        title: "모든 항목은 필수입니다.",
-      });
-    }
+    // if (reciptImageFile && content && selectTime && carVin) {
+    //   mutate(formData);
+    // } else {
+    //   Toast.fire({
+    //     icon: "error",
+    //     title: "모든 항목은 필수입니다.",
+    //   });
+    // }
   };
 
   const changeCategory = (e: any) => {

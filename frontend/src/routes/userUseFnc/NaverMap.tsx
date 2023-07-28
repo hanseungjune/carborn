@@ -121,33 +121,33 @@ function NaverMap() {
   /**
    * 현재 위치를 받는 함수
    */
-  const getCurrentLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // const lat = position.coords.latitude;
-        // const lng = position.coords.longitude;
-        const lat = 36.107159;
-        const lng = 128.417394;
-        const ObjString: any = localStorage.getItem("login-token");
+  // const getCurrentLocation = () => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       // const lat = position.coords.latitude;
+  //       // const lng = position.coords.longitude;
+  //       const lat = 36.107159;
+  //       const lng = 128.417394;
+  //       const ObjString: any = localStorage.getItem("login-token");
 
-        axios({
-          method: "get",
-          url: `https://carborn.site/api/user/map/list/${lat}/${lng}`,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-          },
-        })
-          .then((res) => res.data)
-          .then((data) => {
-            const markerInfo = data.message;
-            drawingMap(lat, lng, markerInfo);
-          });
-      },
-      null,
-      options
-    );
-  };
+  //       axios({
+  //         method: "get",
+  //         url: `https://carborn.site/api/user/map/list/${lat}/${lng}`,
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //         },
+  //       })
+  //         .then((res) => res.data)
+  //         .then((data) => {
+  //           const markerInfo = data.message;
+  //           drawingMap(lat, lng, markerInfo);
+  //         });
+  //     },
+  //     null,
+  //     options
+  //   );
+  // };
 
   /**
    * 지도를 그리는 함수
@@ -321,9 +321,9 @@ function NaverMap() {
     }
   };
 
-  useEffect(() => {
-    getCurrentLocation();
-  }, []);
+  // useEffect(() => {
+  //   getCurrentLocation();
+  // }, []);
 
   // 검색창 검수원, 정비소 왼쪽 박스에서 클릭시 실행
   const searchBarItemClick = (index: number) => {
@@ -398,10 +398,10 @@ function NaverMap() {
             )}
           </div>
         </div>
-        <CurrentLocationBtn
+        {/* <CurrentLocationBtn
           mapRef={mapRef}
           getCurrentLocation={getCurrentLocation}
-        />
+        /> */}
       </div>
     </>
   );

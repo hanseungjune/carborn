@@ -36,13 +36,13 @@ export default function ReserveTable() {
   const isGarage = useLocation().pathname == "/garage/reserve";
   let URL;
   let queryKey;
-  if (isGarage) {
-    URL = `https://carborn.site/api/repair-shop/book/list/${page + 1}/7`;
-    queryKey = "getRepairReserveData";
-  } else {
-    URL = `https://carborn.site/api/inspector/book/list/${page + 1}/7`;
-    queryKey = "getInspectorData";
-  }
+  // if (isGarage) {
+  //   URL = `https://carborn.site/api/repair-shop/book/list/${page + 1}/7`;
+  //   queryKey = "getRepairReserveData";
+  // } else {
+  //   URL = `https://carborn.site/api/inspector/book/list/${page + 1}/7`;
+  //   queryKey = "getInspectorData";
+  // }
 
   const ObjString: any = localStorage.getItem("login-token");
 
@@ -53,23 +53,23 @@ export default function ReserveTable() {
     },
   };
 
-  const getReserveData = useAPI("get", URL, option);
-  const { data, refetch } = useQuery(queryKey, () => getReserveData, {
-    cacheTime: 1000 * 300,
-    staleTime: 1000 * 300,
-    refetchOnWindowFocus: false,
-    select: (data) => {
-      console.log(data);
-      return data.data.message;
-    },
-    onError: (error: Error) => {
-      console.log(error);
-    },
-    suspense: true,
-  });
-  useEffect(() => {
-    refetch();
-  }, [page]);
+  // const getReserveData = useAPI("get", URL, option);
+  // const { data, refetch } = useQuery(queryKey, () => getReserveData, {
+  //   cacheTime: 1000 * 300,
+  //   staleTime: 1000 * 300,
+  //   refetchOnWindowFocus: false,
+  //   select: (data) => {
+  //     console.log(data);
+  //     return data.data.message;
+  //   },
+  //   onError: (error: Error) => {
+  //     console.log(error);
+  //   },
+  //   suspense: true,
+  // });
+  // useEffect(() => {
+  //   refetch();
+  // }, [page]);
 
   const handleChangePage = (e: any, newPage: any) => {
     setPage(() => newPage);
@@ -135,7 +135,7 @@ export default function ReserveTable() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          {/* <TableBody>
             {data?.content?.map(
               (
                 {
@@ -186,8 +186,8 @@ export default function ReserveTable() {
                 </TableRow>
               )
             )}
-          </TableBody>
-          <TableFooter>
+          </TableBody> */}
+          {/* <TableFooter>
             <TableRow>
               <TablePagination
                 count={data?.totalElements}
@@ -197,7 +197,7 @@ export default function ReserveTable() {
                 rowsPerPageOptions={[]}
               />
             </TableRow>
-          </TableFooter>
+          </TableFooter> */}
         </Table>
       </TableContainer>
     </div>

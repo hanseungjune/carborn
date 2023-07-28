@@ -107,74 +107,74 @@ function CarList() {
   const { sortType, keyword, keywordType } = useSelector(
     ({ carListReducer }: { carListReducer: StateType }) => carListReducer
   );
-  const SORT_API = (pageParam: number) => {
-    return `https://carborn.site/api/user/car/sale/list/${pageParam}/${SIZE}/${sortType}`;
-  };
-  const SEARCH_API = (pageParam: number) => {
-    return `https://carborn.site/api/user/car/sale/list/${pageParam}/${SIZE}/${sortType}/${keywordType}/${keyword}`;
-  };
+  // const SORT_API = (pageParam: number) => {
+  //   return `https://carborn.site/api/user/car/sale/list/${pageParam}/${SIZE}/${sortType}`;
+  // };
+  // const SEARCH_API = (pageParam: number) => {
+  //   return `https://carborn.site/api/user/car/sale/list/${pageParam}/${SIZE}/${sortType}/${keywordType}/${keyword}`;
+  // };
 
   const ObjString: any = localStorage.getItem("login-token");
 
-  const { data, fetchNextPage, hasNextPage, isError, isLoading } =
-    useInfiniteQuery(
-      "infinity-scroll",
-      ({ pageParam = 1 }) => {
-        return axios({
-          method: "get",
-          url:
-            keyword && keywordType
-              ? SEARCH_API(pageParam)
-              : SORT_API(pageParam),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-          },
-        });
-      },
-      {
-        retry: false,
-        refetchOnMount: true,
-        refetchOnWindowFocus: true,
-        keepPreviousData: true,
-        useErrorBoundary: true,
-        getNextPageParam: (lastPage, allPages) => {
-          if (lastPage?.data?.message?.totalPages > allPages?.length) {
-            return allPages.length + 1;
-          }
-        },
-        onSuccess: (data) => {
-          return data;
-        },
-        onError: (error: Error) => {
-          setError(error);
-        },
-      }
-    );
+  // const { data, fetchNextPage, hasNextPage, isError, isLoading } =
+  //   useInfiniteQuery(
+  //     "infinity-scroll",
+  //     ({ pageParam = 1 }) => {
+  //       return axios({
+  //         method: "get",
+  //         url:
+  //           keyword && keywordType
+  //             ? SEARCH_API(pageParam)
+  //             : SORT_API(pageParam),
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //         },
+  //       });
+  //     },
+  //     {
+  //       retry: false,
+  //       refetchOnMount: true,
+  //       refetchOnWindowFocus: true,
+  //       keepPreviousData: true,
+  //       useErrorBoundary: true,
+  //       getNextPageParam: (lastPage, allPages) => {
+  //         if (lastPage?.data?.message?.totalPages > allPages?.length) {
+  //           return allPages.length + 1;
+  //         }
+  //       },
+  //       onSuccess: (data) => {
+  //         return data;
+  //       },
+  //       onError: (error: Error) => {
+  //         setError(error);
+  //       },
+  //     }
+  //   );
 
-  const intersection = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        observer.disconnect();
-        if (hasNextPage) {
-          fetchNextPage();
-        }
-      }
-    });
-  }, intersectionOptions);
+  // const intersection = new IntersectionObserver((entries, observer) => {
+  //   entries.forEach((entry) => {
+  //     if (entry.isIntersecting) {
+  //       observer.disconnect();
+  //       if (hasNextPage) {
+  //         fetchNextPage();
+  //       }
+  //     }
+  //   });
+  // }, intersectionOptions);
 
   // 데이터가 비었는지 확인하는 변수
-  const isData = !!data?.pages[0].data.message.content.length;
+  // const isData = !!data?.pages[0].data.message.content.length;
 
-  useEffect(() => {
-    if (divRef?.current && isData && data) {
-      let lastPage =
-        (data?.pages?.length - 1) * SIZE +
-        data?.pages[data?.pages?.length - 1].data?.message?.content?.length -
-        1;
-      intersection.observe(divRef?.current[lastPage]);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (divRef?.current && isData && data) {
+  //     let lastPage =
+  //       (data?.pages?.length - 1) * SIZE +
+  //       data?.pages[data?.pages?.length - 1].data?.message?.content?.length -
+  //       1;
+  //     intersection.observe(divRef?.current[lastPage]);
+  //   }
+  // }, [data]);
 
   const goToDetil = (carId: number, id: number) => {
     navigation(`/user/car/${carId}/${id}`);
@@ -197,24 +197,24 @@ function CarList() {
   // }
 
   // 로딩중일 때
-  if (isLoading) {
-    return (
-      <div css={rightContent}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Loading />
-        </div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div css={rightContent}>
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           justifyContent: "center",
+  //         }}
+  //       >
+  //         <Loading />
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div css={rightContent}>
-      {isData ? (
+      {/* {isData ? (
         data?.pages.map((item) => {
           return item?.data?.message?.content.map(
             (car: CarType, index: number) => {
@@ -280,7 +280,7 @@ function CarList() {
       ) : (
         // 검색 결과가 없음
         <NoCarList />
-      )}
+      )} */}
     </div>
   );
 }

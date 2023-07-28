@@ -18,35 +18,35 @@ const PAGE = 1;
 const SIZE = 100;
 const ObjString: any = localStorage.getItem("login-token");
 
-const API = `https://carborn.site/api/user/car/list/${PAGE}/${SIZE}`;
+// const API = `https://carborn.site/api/user/car/list/${PAGE}/${SIZE}`;
 function MyCarInformation({ setReserveInfo, reserveInfo }: Props) {
-  const getUserCarListFnc = useAPI("get", API, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-    },
-  });
-  const { data: carList } = useQuery(
-    "get-user-car-list-fnc",
-    () => getUserCarListFnc,
-    {
-      retry: false,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      cacheTime: 1000 * 300,
-      staleTime: 1000 * 300,
-      select: (data) => {
-        return data.data.message.content;
-      },
-    }
-  );
+//   const getUserCarListFnc = useAPI("get", API, {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+//     },
+//   });
+//   const { data: carList } = useQuery(
+//     "get-user-car-list-fnc",
+//     () => getUserCarListFnc,
+//     {
+//       retry: false,
+//       refetchOnMount: false,
+//       refetchOnWindowFocus: false,
+//       cacheTime: 1000 * 300,
+//       staleTime: 1000 * 300,
+//       select: (data) => {
+//         return data.data.message.content;
+//       },
+//     }
+//   );
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setReserveInfo((reserveInfo) => {
-      const value = event.target.value;
-      return { ...reserveInfo, carId: value };
-    });
-  };
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setReserveInfo((reserveInfo) => {
+  //     const value = event.target.value;
+  //     return { ...reserveInfo, carId: value };
+  //   });
+  // };
 
   return (
     <>
@@ -55,7 +55,7 @@ function MyCarInformation({ setReserveInfo, reserveInfo }: Props) {
           내 차 선택
         </span>
         <FormControl sx={{ width: "100%", margin: "4% 0 4% 0" }}>
-          <Select
+          {/* <Select
             labelId="demo-simple-select-autowidth-label"
             id="demo-simple-select-autowidth"
             value={reserveInfo?.carId}
@@ -70,7 +70,7 @@ function MyCarInformation({ setReserveInfo, reserveInfo }: Props) {
                 >{`${car.maker} / ${car.modelNm}`}</MenuItem>
               );
             })}
-          </Select>
+          </Select> */}
         </FormControl>
       </div>
     </>

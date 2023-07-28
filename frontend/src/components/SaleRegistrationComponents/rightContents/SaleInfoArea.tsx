@@ -19,7 +19,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 
 const rightContent = css`
   width: 30vw;
@@ -82,7 +82,7 @@ export interface DataType {
   };
 }
 
-const POST_API = `https://carborn.site/api/user/car/sell`;
+// const POST_API = `https://carborn.site/api/user/car/sell`;
 
 function SaleInfoContents({
   setError,
@@ -97,75 +97,75 @@ function SaleInfoContents({
   const { id: carId } = useParams();
   const navigation = useNavigate();
 
-  const GET_API = `https://carborn.site/api/user/car/${carId}`;
-  const getCarInfo = useAPI("get", GET_API, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-    },
-  });
+  // const GET_API = `https://carborn.site/api/user/car/${carId}`;
+  // const getCarInfo = useAPI("get", GET_API, {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //   },
+  // });
 
   // 자동차 정보를 받아오는 query
-  const { data } = useQuery("get-car-info", () => getCarInfo, {
-    cacheTime: 1000 * 300,
-    staleTime: 0,
-    select: (data) => {
-      return data.data.message;
-    },
-    onError: (error: Error) => {
-      setError(error);
-    },
-    onSuccess: (data) => {
-      setImg((img) => {
-        return [...data.img];
-      });
-    },
-    suspense: true,
-    useErrorBoundary: true,
-  });
+  // const { data } = useQuery("get-car-info", () => getCarInfo, {
+  //   cacheTime: 1000 * 300,
+  //   staleTime: 0,
+  //   select: (data) => {
+  //     return data.data.message;
+  //   },
+  //   onError: (error: Error) => {
+  //     setError(error);
+  //   },
+  //   onSuccess: (data) => {
+  //     setImg((img) => {
+  //       return [...data.img];
+  //     });
+  //   },
+  //   suspense: true,
+  //   useErrorBoundary: true,
+  // });
 
   // 제출할 때 실행되는 query
-  const { mutate, isSuccess } = useMutation(() =>
-    axios({
-      method: "post",
-      url: POST_API,
-      data: {
-        price: parseInt(saleInfo.price),
-        content: saleInfo.content,
-        car: { id: data.detail.id },
-      },
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-      },
-    })
-  );
+  // const { mutate, isSuccess } = useMutation(() =>
+  //   axios({
+  //     method: "post",
+  //     url: POST_API,
+  //     data: {
+  //       price: parseInt(saleInfo.price),
+  //       content: saleInfo.content,
+  //       car: { id: data.detail.id },
+  //     },
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //     },
+  //   })
+  // );
 
   const submitInfo = () => {
     if (saleInfo.content && saleInfo.price) {
-      swal({
-        title: "등록이 완료되었습니다.",
-        text: "2초후 자동으로 닫힙니다.",
-        icon: "success",
-        timer: 2000,
-        buttons: ["확인"],
-      });
-      mutate();
+      // swal({
+      //   title: "등록이 완료되었습니다.",
+      //   text: "2초후 자동으로 닫힙니다.",
+      //   icon: "success",
+      //   timer: 2000,
+      //   buttons: ["확인"],
+      // });
+      // mutate();
     } else {
-      swal({
-        text: "양식을 채워주세요",
-        icon: "error",
-        timer: 2000,
-        buttons: ["확인"],
-      });
+      // swal({
+      //   text: "양식을 채워주세요",
+      //   icon: "error",
+      //   timer: 2000,
+      //   buttons: ["확인"],
+      // });
     }
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      navigation("/user/car/list");
-    }
-  }, [isSuccess]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     navigation("/user/car/list");
+  //   }
+  // }, [isSuccess]);
 
   const back = () => {
     navigation(-1);
@@ -183,13 +183,13 @@ function SaleInfoContents({
         }}
       />
       {/* 제조사 / 차량모델 */}
-      <SaleManufacturingCompany data={data.detail} />
+      {/* <SaleManufacturingCompany data={data.detail} /> */}
       {/* 차량번호 */}
-      <SaleCarNumber data={data.detail} />
+      {/* <SaleCarNumber data={data.detail} /> */}
       {/* 연식 */}
-      <SaleCarYear data={data.detail} />
+      {/* <SaleCarYear data={data.detail} /> */}
       {/* 주행거리 */}
-      <SaleDistanceDriven data={data.detail} />
+      {/* <SaleDistanceDriven data={data.detail} /> */}
       {/* 차량 가격 */}
       <SaleCarCost setSaleInfo={setSaleInfo} />
       {/* 판매내용 */}

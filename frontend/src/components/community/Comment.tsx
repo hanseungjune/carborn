@@ -45,58 +45,58 @@ export default function Comment() {
     },
   };
 
-  let getCommentsUrl = `https://carborn.site/api/user/community/${id}/comment/${page}/5`;
-  const postCommentUrl = `https://carborn.site/api/user/community/comment`;
+  // let getCommentsUrl = `https://carborn.site/api/user/community/${id}/comment/${page}/5`;
+  // const postCommentUrl = `https://carborn.site/api/user/community/comment`;
 
-  const getComments = useAPI("get", getCommentsUrl, option);
+  // const getComments = useAPI("get", getCommentsUrl, option);
 
-  const { data, refetch }: any = useQuery(
-    `getComments${id}`,
-    () => getComments,
-    {
-      select: (res) => res?.data?.message,
-      enabled: !!isFetch,
-      retry: false,
-    }
-  );
+  // const { data, refetch }: any = useQuery(
+  //   `getComments${id}`,
+  //   () => getComments,
+  //   {
+  //     select: (res) => res?.data?.message,
+  //     enabled: !!isFetch,
+  //     retry: false,
+  //   }
+  // );
 
-  const { mutate } = useMutation(
-    () =>
-      axios({
-        url: postCommentUrl,
-        method: "post",
-        ...postOption,
-      }),
-    {
-      onSuccess: () => {
-        refetch();
-      },
-    }
-  );
+  // const { mutate } = useMutation(
+  //   () =>
+  //     axios({
+  //       url: postCommentUrl,
+  //       method: "post",
+  //       ...postOption,
+  //     }),
+  //   {
+  //     onSuccess: () => {
+  //       refetch();
+  //     },
+  //   }
+  // );
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    if (comment) {
-      mutate();
-      queryClient.invalidateQueries(`getComments${id}`);
-      setIsFetch(true);
-    } else {
-      alert("내용을 입력해 주세요");
-    }
-    setComment("");
-  };
+  // const handleSubmit = (e: any) => {
+  //   e.preventDefault();
+  //   if (comment) {
+  //     mutate();
+  //     queryClient.invalidateQueries(`getComments${id}`);
+  //     setIsFetch(true);
+  //   } else {
+  //     alert("내용을 입력해 주세요");
+  //   }
+  //   setComment("");
+  // };
 
   const handleComment = (e: any) => {
     setComment(e.target.value);
   };
 
-  useEffect(() => {
-    refetch();
-  }, [page]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [page]);
 
-  useEffect(() => {
-    setCommentData(data?.content);
-  }, [data?.content]);
+  // useEffect(() => {
+  //   setCommentData(data?.content);
+  // }, [data?.content]);
 
   return (
     <Box component="div" sx={{ mb: "20px" }}>
@@ -152,10 +152,10 @@ export default function Comment() {
           ))}
         </Box>
       )}
-      <CommentPageNation
+      {/* <CommentPageNation
         totalLen={data ? Math.ceil(data?.totalElements / 5) : 0}
         setPage={setPage}
-      />
+      /> */}
       <Box component="form">
         <TextField
           id="standard-basic"
@@ -171,14 +171,14 @@ export default function Comment() {
           }}
           onChange={handleComment}
         />
-        <Button
+        {/* <Button
           variant="contained"
           type="submit"
           onClick={handleSubmit}
           sx={{ mt: "10px", float: "right" }}
         >
           댓글 달기
-        </Button>
+        </Button> */}
       </Box>
     </Box>
   );

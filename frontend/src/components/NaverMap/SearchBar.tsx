@@ -11,30 +11,30 @@ interface SearchBarType {
 function SearchBar({ index, item, searchBarItemClick }: SearchBarType) {
   const ObjString: any = localStorage.getItem("login-token");
 
-  const API = `https://carborn.site/api/address/convert-geo/jibun/${item.ADDRESS}`;
-  const getJibunAddressAPI = useAPI("get", API, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-    },
-  });
-  const hipenPhoneNum = usePhoneNum(item?.PHONE_NO);
-  const { data } = useQuery(
-    ["get-jibun-address", index],
-    () => getJibunAddressAPI,
-    {
-      retry: false,
-      cacheTime: 1000 * 300,
-      staleTime: 1000 * 300,
-      select: (data) => {
-        return data.data.message;
-      },
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
+  // const API = `https://carborn.site/api/address/convert-geo/jibun/${item.ADDRESS}`;
+  // const getJibunAddressAPI = useAPI("get", API, {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //   },
+  // });
+  // const hipenPhoneNum = usePhoneNum(item?.PHONE_NO);
+  // const { data } = useQuery(
+  //   ["get-jibun-address", index],
+  //   () => getJibunAddressAPI,
+  //   {
+  //     retry: false,
+  //     cacheTime: 1000 * 300,
+  //     staleTime: 1000 * 300,
+  //     select: (data) => {
+  //       return data.data.message;
+  //     },
+  //     refetchOnMount: false,
+  //     refetchOnWindowFocus: false,
+  //   }
+  // );
 
-  const jibun = data?.jibunAddress.slice(" ");
+  // const jibun = data?.jibunAddress.slice(" ");
   return (
     <div
       style={{
@@ -76,7 +76,7 @@ function SearchBar({ index, item, searchBarItemClick }: SearchBarType) {
       >
         {item?.ADDRESS}
       </p>
-      <p
+      {/* <p
         style={{
           margin: "0",
           color: "#C1C1C1",
@@ -103,7 +103,7 @@ function SearchBar({ index, item, searchBarItemClick }: SearchBarType) {
         }}
       >
         {hipenPhoneNum}
-      </p>
+      </p> */}
       <div
         style={{
           border: "0.8px solid #C1C1C1",

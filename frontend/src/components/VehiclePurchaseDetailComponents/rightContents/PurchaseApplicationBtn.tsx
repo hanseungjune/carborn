@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import axios, { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 import { useAPI } from "../../../hooks/useAPI";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
@@ -169,226 +169,226 @@ function PurchaseApplicationBtn({
   const queryClient = useQueryClient();
 
   // 구매 신청
-  const API = `https://carborn.site/api/user/car/buy/${id}`;
-  const { mutate } = useMutation(
-    () => {
-      return axios({
-        method: "post",
-        url: API,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-    {
-      onError: (error: Error) => {
-        console.error(error.message);
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries(["get-car-detail", page]);
-        navigate("/user/mypage/buycontent");
-      },
-    }
-  );
+  // const API = `https://carborn.site/api/user/car/buy/${id}`;
+  // const { mutate } = useMutation(
+  //   () => {
+  //     return axios({
+  //       method: "post",
+  //       url: API,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //   },
+  //   {
+  //     onError: (error: Error) => {
+  //       console.error(error.message);
+  //     },
+  //     onSettled: () => {
+  //       queryClient.invalidateQueries(["get-car-detail", page]);
+  //       navigate("/user/mypage/buycontent");
+  //     },
+  //   }
+  // );
 
   const goToBuy = () => {
-    mutate();
-    swal({
-      title: "신청되었습니다.",
-      text: "2초후 자동으로 닫힙니다.",
-      icon: "success",
-      buttons: [true],
-      timer: 2000,
-    });
+    // mutate();
+    // swal({
+    //   title: "신청되었습니다.",
+    //   text: "2초후 자동으로 닫힙니다.",
+    //   icon: "success",
+    //   buttons: [true],
+    //   timer: 2000,
+    // });
   };
 
   // 판매자 - 판매 취소 (확인)
-  const SALER_DELETE_API = `https://carborn.site/api/user/sell/cancel/${id}`;
-  const { mutate: salerDeleteMutate } = useMutation(
-    () => {
-      return axios({
-        method: "put",
-        url: SALER_DELETE_API,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["get-car-detail", PAGE]);
-        swal("판매가 취소되었습니다..", {
-          icon: "success",
-        });
-        navigate("/user/car/list");
-        queryClient.invalidateQueries("infinity-scroll");
-      },
-    }
-  );
-  const salerDelete = () => {
-    swal({
-      text: "판매를 취소하겠습니까?",
-      buttons: ["나가기", "판매취소"],
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        salerDeleteMutate();
-      }
-    });
-  };
+  // const SALER_DELETE_API = `https://carborn.site/api/user/sell/cancel/${id}`;
+  // const { mutate: salerDeleteMutate } = useMutation(
+  //   () => {
+  //     return axios({
+  //       method: "put",
+  //       url: SALER_DELETE_API,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries(["get-car-detail", PAGE]);
+  //       swal("판매가 취소되었습니다..", {
+  //         icon: "success",
+  //       });
+  //       navigate("/user/car/list");
+  //       queryClient.invalidateQueries("infinity-scroll");
+  //     },
+  //   }
+  // );
+  // const salerDelete = () => {
+  //   swal({
+  //     text: "판매를 취소하겠습니까?",
+  //     buttons: ["나가기", "판매취소"],
+  //     dangerMode: true,
+  //   }).then((willDelete) => {
+  //     if (willDelete) {
+  //       salerDeleteMutate();
+  //     }
+  //   });
+  // };
 
   // 구매 신청자 리스트 모달 오픈
-  const USER_LIST_API = `https://carborn.site/api/user/car/sale/sell/${id}/${page}/${SIZE}`;
-  const getApplyUserList = useAPI("get", USER_LIST_API, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  // const USER_LIST_API = `https://carborn.site/api/user/car/sale/sell/${id}/${page}/${SIZE}`;
+  // const getApplyUserList = useAPI("get", USER_LIST_API, {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // });
 
-  const { data, refetch } = useQuery<any, AxiosError>(
-    "get-apply-user-list",
-    () => getApplyUserList,
-    {
-      retry: false,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      keepPreviousData: true,
-      cacheTime: 0,
-      staleTime: 0,
-      select: (data) => {
-        return data.data.message.content;
-      },
-      enabled: false,
-    }
-  );
+  // const { data, refetch } = useQuery<any, AxiosError>(
+  //   "get-apply-user-list",
+  //   () => getApplyUserList,
+  //   {
+  //     retry: false,
+  //     refetchOnMount: false,
+  //     refetchOnWindowFocus: false,
+  //     keepPreviousData: true,
+  //     cacheTime: 0,
+  //     staleTime: 0,
+  //     select: (data) => {
+  //       return data.data.message.content;
+  //     },
+  //     enabled: false,
+  //   }
+  // );
 
-  const showModal = () => {
-    refetch();
-    modalRef?.current?.showModal();
-  };
+  // const showModal = () => {
+  //   refetch();
+  //   modalRef?.current?.showModal();
+  // };
 
   // 판매 확정
-  const { mutate: putMutate } = useMutation(
-    (userId: string) => {
-      return axios({
-        method: "put",
-        url: `https://carborn.site/api/user/car/sale/sell/confirm/${id}/${userId}`,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["get-car-detail", PAGE]);
-        navigate("/user/mypage/sellcontent");
-      },
-    }
-  );
+  // const { mutate: putMutate } = useMutation(
+  //   (userId: string) => {
+  //     return axios({
+  //       method: "put",
+  //       url: `https://carborn.site/api/user/car/sale/sell/confirm/${id}/${userId}`,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries(["get-car-detail", PAGE]);
+  //       navigate("/user/mypage/sellcontent");
+  //     },
+  //   }
+  // );
 
   const isConfirm = (userId: string) => {
     modalRef?.current?.close();
-    swal({
-      text: "판매를 확정하겠습니까?",
-      buttons: [true, true],
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        putMutate(userId);
-        swal("확정되었습니다.", {
-          icon: "success",
-        });
-      } else {
-        swal("취소되었습니다.");
-      }
-    });
+    // swal({
+    //   text: "판매를 확정하겠습니까?",
+    //   buttons: [true, true],
+    //   dangerMode: true,
+    // }).then((willDelete) => {
+    //   if (willDelete) {
+    //     putMutate(userId);
+    //     swal("확정되었습니다.", {
+    //       icon: "success",
+    //     });
+    //   } else {
+    //     swal("취소되었습니다.");
+    //   }
+    // });
   };
 
   // 뒤로가기 (확인)
   const back = () => {
-    navigate(-1);
+    // navigate(-1);
   };
 
   // 사용자 구매 확정 및 취소
   // 확정
-  const USER_BUY_CONFIRM_API = `https://carborn.site/api/user/car/sale/buy/confirm/${id}`;
-  const { mutate: confirmMutate } = useMutation(
-    () => {
-      return axios({
-        method: "put",
-        url: USER_BUY_CONFIRM_API,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("get-car-detail");
-        navigate("/user/mypage/buycontent");
-      },
-    }
-  );
+  // const USER_BUY_CONFIRM_API = `https://carborn.site/api/user/car/sale/buy/confirm/${id}`;
+  // const { mutate: confirmMutate } = useMutation(
+  //   () => {
+  //     return axios({
+  //       method: "put",
+  //       url: USER_BUY_CONFIRM_API,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries("get-car-detail");
+  //       navigate("/user/mypage/buycontent");
+  //     },
+  //   }
+  // );
 
-  const userConfirmBtn = () => {
-    swal({
-      text: `구매 확정을 원하시면 구매확정을 눌러주세요.`,
-      buttons: ["나가기", "구매확정"],
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        confirmMutate();
+  // const userConfirmBtn = () => {
+  //   swal({
+  //     text: `구매 확정을 원하시면 구매확정을 눌러주세요.`,
+  //     buttons: ["나가기", "구매확정"],
+  //     dangerMode: true,
+  //   }).then((willDelete) => {
+  //     if (willDelete) {
+  //       confirmMutate();
 
-        swal("확정되었습니다.", {
-          icon: "success",
-        });
-      } else {
-      }
-    });
-  };
+  //       swal("확정되었습니다.", {
+  //         icon: "success",
+  //       });
+  //     } else {
+  //     }
+  //   });
+  // };
 
   // 취소
-  const USER_BUY_CENCEL_API = `https://carborn.site/api/user/car/sale/buy/cancel/${id}`;
-  const { mutate: cancelMutate } = useMutation(
-    () => {
-      return axios({
-        method: "put",
-        url: USER_BUY_CENCEL_API,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["get-car-detail", PAGE]);
-        navigate("/user/mypage/buycontent");
-      },
-    }
-  );
+  // const USER_BUY_CENCEL_API = `https://carborn.site/api/user/car/sale/buy/cancel/${id}`;
+  // const { mutate: cancelMutate } = useMutation(
+  //   () => {
+  //     return axios({
+  //       method: "put",
+  //       url: USER_BUY_CENCEL_API,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries(["get-car-detail", PAGE]);
+  //       navigate("/user/mypage/buycontent");
+  //     },
+  //   }
+  // );
 
-  const userCencelBtn = () => {
-    swal({
-      text: `구매취소를 원하시면 구매취소를 눌러주세요`,
-      buttons: ["나가기", "구매취소"],
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        cancelMutate();
+  // const userCencelBtn = () => {
+  //   swal({
+  //     text: `구매취소를 원하시면 구매취소를 눌러주세요`,
+  //     buttons: ["나가기", "구매취소"],
+  //     dangerMode: true,
+  //   }).then((willDelete) => {
+  //     if (willDelete) {
+  //       cancelMutate();
 
-        swal("취소되었습니다.", {
-          icon: "success",
-        });
-      } else {
-      }
-    });
-  };
+  //       swal("취소되었습니다.", {
+  //         icon: "success",
+  //       });
+  //     } else {
+  //     }
+  //   });
+  // };
 
   useEffect(() => {}, [
     DetailData?.detail?.saleStatus,
@@ -406,14 +406,14 @@ function PurchaseApplicationBtn({
       ) : userId === DetailData?.detail?.accountId ? (
         DetailData?.detail?.saleStatus === 0 ? (
           <>
-            <Button className="user-delete" onClick={salerDelete}>
+            {/* <Button className="user-delete" onClick={salerDelete}>
               판매취소
-            </Button>
-            <Button className="list" onClick={showModal}>
+            </Button> */}
+            {/* <Button className="list" onClick={showModal}>
               신청자 목록
-            </Button>
+            </Button> */}
             <dialog ref={modalRef} css={dialog}>
-              <div css={{ display: "flex", justifyContent: "center" }}>
+              {/* <div css={{ display: "flex", justifyContent: "center" }}>
                 {data?.map((userInfo: DataType) => {
                   return (
                     <div className="userInfoBox" key={userInfo.id}>
@@ -441,7 +441,7 @@ function PurchaseApplicationBtn({
                     </div>
                   );
                 })}
-              </div>
+              </div> */}
               <form method="dialog">
                 <button value="close" css={closeBtn}>
                   Close
@@ -466,12 +466,12 @@ function PurchaseApplicationBtn({
         </Button>
       ) : DetailData?.bookStatus?.bookStatus === 0 ? (
         <>
-          <button className="user-delete" onClick={userCencelBtn}>
+          {/* <button className="user-delete" onClick={userCencelBtn}>
             신청취소
           </button>
           <button className="user-complete" onClick={userConfirmBtn}>
             구매확정
-          </button>
+          </button> */}
         </>
       ) : DetailData?.bookStatus?.bookStatus === 1 ? (
         <button className="complete">확정완료</button>

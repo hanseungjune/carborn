@@ -87,28 +87,28 @@ export default function CreateNewWrite() {
     timerProgressBar: true,
   });
 
-  const { mutate } = useMutation(
-    () => {
-      return axios({
-        method: "post",
-        url: `https://carborn.site/api/user/community`,
-        data: { ...contents },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-        },
-      });
-    },
-    {
-      onSuccess: () => {
-        Toast.fire({
-          icon: "success",
-          title: "글 작성을 성공했습니다.",
-          didClose: () => navigate("/user/community"),
-        });
-      },
-    }
-  );
+  // const { mutate } = useMutation(
+  //   () => {
+  //     return axios({
+  //       method: "post",
+  //       url: `https://carborn.site/api/user/community`,
+  //       data: { ...contents },
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //       },
+  //     });
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       Toast.fire({
+  //         icon: "success",
+  //         title: "글 작성을 성공했습니다.",
+  //         didClose: () => navigate("/user/community"),
+  //       });
+  //     },
+  //   }
+  // );
 
   const setTitle = (e: React.FocusEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -125,7 +125,7 @@ export default function CreateNewWrite() {
         title: "모든 항목은 필수입니다.",
       });
     } else {
-      mutate();
+      // mutate();
     }
   };
 

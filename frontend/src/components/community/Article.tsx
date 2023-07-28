@@ -39,29 +39,29 @@ export default function ArticleDetail() {
     },
   };
 
-  const articleDetailUrl = `https://carborn.site/api/user/community/${id}`;
+  // const articleDetailUrl = `https://carborn.site/api/user/community/${id}`;
 
-  const getArticle = useAPI("get", articleDetailUrl, option);
+  // const getArticle = useAPI("get", articleDetailUrl, option);
 
-  const { data } = useQuery(`getArticle${id}`, () => getArticle, {
-    select: (res) => res.data.message,
-  });
+  // const { data } = useQuery(`getArticle${id}`, () => getArticle, {
+  //   select: (res) => res.data.message,
+  // });
 
-  const titleLen = data?.title?.length;
-  console.log(data?.content, typeof data?.content);
+  // const titleLen = data?.title?.length;
+  // console.log(data?.content, typeof data?.content);
   return (
     <ThemeProvider theme={theme}>
       <Container sx={{ marginTop: "100px", width: "65vw" }}>
         <Box component="div" sx={{ mb: "10px" }}>
-          <Typography
+          {/* <Typography
             variant="h4"
             component="h2"
             gutterBottom
             sx={{ fontFamily: "Pretendard" }}
           >
             {data?.title}
-          </Typography>
-          <Divider
+          </Typography> */}
+          {/* <Divider
             sx={{
               mb: "10px",
               borderColor: "#d23131",
@@ -69,8 +69,8 @@ export default function ArticleDetail() {
               backgroundColor: "#d23131",
               height: "1.5px",
             }}
-          />
-          <Typography
+          /> */}
+          {/* <Typography
             variant="subtitle2"
             component="p"
             gutterBottom
@@ -84,7 +84,7 @@ export default function ArticleDetail() {
             sx={{ fontFamily: "Pretendard" }}
           >
             작성일 | {dayjs(data?.regDt).format("YYYY년 MM월 DD일")}
-          </Typography>
+          </Typography> */}
         </Box>
         <Divider sx={{ mb: "10px" }} />
         <Box
@@ -95,11 +95,11 @@ export default function ArticleDetail() {
           }}
         >
           <Typography variant="body1" component="div">
-            {data ? (
+            {/* {data ? (
               <div dangerouslySetInnerHTML={{ __html: data?.content }}></div>
             ) : (
               ""
-            )}
+            )} */}
           </Typography>
         </Box>
         <Comment />

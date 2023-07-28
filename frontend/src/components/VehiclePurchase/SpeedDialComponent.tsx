@@ -11,7 +11,7 @@ import SpeedDialTable from "./SpeedDialTable";
 import { useState } from "react";
 import { useAPI } from "./../../hooks/useAPI";
 import { useQuery } from "react-query";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 
 const container = css`
@@ -57,40 +57,40 @@ function SpeedDialComponent() {
   const navigate = useNavigate();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [page, setPage] = useState<number>(1);
-  const API = `https://carborn.site/api/user/car/list/${page}/${SIZE}`;
+  // const API = `https://carborn.site/api/user/car/list/${page}/${SIZE}`;
   const ObjString: any = localStorage.getItem("login-token");
 
-  const getCarListFnc = useAPI("get", API, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-    },
-  });
+  // const getCarListFnc = useAPI("get", API, {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //   },
+  // });
 
-  const { data } = useQuery("get-car-list-fnc", () => getCarListFnc, {
-    retry: false,
-    cacheTime: 1000 * 300,
-    staleTime: 0,
-    select: (data) => {
-      return data.data.message.content;
-    },
-  });
+  // const { data } = useQuery("get-car-list-fnc", () => getCarListFnc, {
+  //   retry: false,
+  //   cacheTime: 1000 * 300,
+  //   staleTime: 0,
+  //   select: (data) => {
+  //     return data.data.message.content;
+  //   },
+  // });
 
-  const showModalFnc = () => {
-    if (data?.length) {
-      dialogRef.current?.showModal();
-    } else {
-      swal({
-        text: "차량을 먼저 등록해주세요!",
-        buttons: ["나가기", "등록하기"],
-        dangerMode: true,
-      }).then((willDelete: any) => {
-        if (willDelete) {
-          navigate("/user/car");
-        }
-      });
-    }
-  };
+  // const showModalFnc = () => {
+  //   if (data?.length) {
+  //     dialogRef.current?.showModal();
+  //   } else {
+  //     swal({
+  //       text: "차량을 먼저 등록해주세요!",
+  //       buttons: ["나가기", "등록하기"],
+  //       dangerMode: true,
+  //     }).then((willDelete: any) => {
+  //       if (willDelete) {
+  //         navigate("/user/car");
+  //       }
+  //     });
+  //   }
+  // };
 
   return (
     <div css={container}>
@@ -98,12 +98,12 @@ function SpeedDialComponent() {
         component="div"
         sx={{ height: 320, transform: "translateZ(0px)", flexGrow: 1 }}
       >
-        <SpeedDial
+        {/* <SpeedDial
           ariaLabel="SpeedDial openIcon example"
           icon={<SpeedDialIcon openIcon={<EditIcon />} />}
           onClick={showModalFnc}
-        ></SpeedDial>
-        <dialog ref={dialogRef} css={dialog}>
+        ></SpeedDial> */}
+        {/* <dialog ref={dialogRef} css={dialog}>
           <SpeedDialTable
             data={data}
             page={page}
@@ -116,7 +116,7 @@ function SpeedDialComponent() {
               Close
             </button>
           </form>
-        </dialog>
+        </dialog> */}
       </Box>
     </div>
   );

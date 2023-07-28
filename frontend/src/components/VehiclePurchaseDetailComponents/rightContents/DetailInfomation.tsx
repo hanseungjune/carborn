@@ -43,36 +43,36 @@ const DetailInfomationComponent = ({
   id?: string;
   setImg: React.Dispatch<React.SetStateAction<any[]>>;
 }) => {
-  const API = `https://carborn.site/api/user/car/sale/${id}/${page}/${SIZE}`;
+  // const API = `https://carborn.site/api/user/car/sale/${id}/${page}/${SIZE}`;
 
   const ObjString: any = localStorage.getItem("login-token");
 
-  const getCarDetail = useAPI("get", API, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-    },
-  });
+  // const getCarDetail = useAPI("get", API, {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //   },
+  // });
 
-  const { data } = useQuery(["get-car-detail", page], () => getCarDetail, {
-    staleTime: 0,
-    cacheTime: 0,
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
-    retry: true,
-    select: (data) => {
-      return data.data.message;
-    },
-    onError: (error: Error) => {
-      setError(error);
-    },
-    onSuccess: (data) => {
-      setImg([...data?.img, data?.vrc]);
-      return data;
-    },
-    suspense: true,
-    useErrorBoundary: true,
-  });
+  // const { data } = useQuery(["get-car-detail", page], () => getCarDetail, {
+  //   staleTime: 0,
+  //   cacheTime: 0,
+  //   refetchOnWindowFocus: true,
+  //   refetchOnMount: true,
+  //   retry: true,
+  //   select: (data) => {
+  //     return data.data.message;
+  //   },
+  //   onError: (error: Error) => {
+  //     setError(error);
+  //   },
+  //   onSuccess: (data) => {
+  //     setImg([...data?.img, data?.vrc]);
+  //     return data;
+  //   },
+  //   suspense: true,
+  //   useErrorBoundary: true,
+  // });
 
   return (
     <div css={rightContent}>
@@ -86,37 +86,37 @@ const DetailInfomationComponent = ({
         }}
       />
 
-      <CarModel data={data.detail} />
+      {/* <CarModel data={data.detail} />
       <CarNumber data={data.detail} />
       <CarCost data={data.detail} />
       <CarDistance data={data.detail} />
-      <CarContent data={data.detail} />
+      <CarContent data={data.detail} /> */}
 
-      <WatchFileBtn<InsuranceDataType>
+      {/* <WatchFileBtn<InsuranceDataType>
         data={data.trade.content}
         value={0}
         page={page}
         setPage={setPage}
-      />
-      <WatchFileBtn<RepairDataType>
+      /> */}
+      {/* <WatchFileBtn<RepairDataType>
         data={data.repair.content}
         value={1}
         page={page}
         setPage={setPage}
-      />
-      <WatchFileBtn<InspectDataType>
+      /> */}
+      {/* <WatchFileBtn<InspectDataType>
         data={data.inspect.content}
         value={2}
         page={page}
         setPage={setPage}
-      />
-      <WatchFileBtn<InsuranceDataType>
+      /> */}
+      {/* <WatchFileBtn<InsuranceDataType>
         data={data.insurance.content}
         value={3}
         page={page}
         setPage={setPage}
-      />
-      <PurchaseApplicationBtn DetailData={data} id={id} PAGE={page} />
+      /> */}
+      {/* <PurchaseApplicationBtn DetailData={data} id={id} PAGE={page} /> */}
     </div>
   );
 };

@@ -95,11 +95,11 @@ export default function RegisterForm() {
   const account = JSON.parse(ObjString).accountType;
   let URL: string;
 
-  if (account == 1) {
-    URL = "https://carborn.site/api/repair-shop/book";
-  } else {
-    URL = "https://carborn.site/api/inspector/book";
-  }
+  // if (account == 1) {
+  //   URL = "https://carborn.site/api/repair-shop/book";
+  // } else {
+  //   URL = "https://carborn.site/api/inspector/book";
+  // }
 
   const option = {
     headers: {

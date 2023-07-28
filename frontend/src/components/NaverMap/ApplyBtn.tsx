@@ -24,71 +24,71 @@ function ApplyBtn({
   const navigate = useNavigate();
   const ObjString: any = localStorage.getItem("login-token");
 
-  const { mutate, isSuccess } = useMutation(
-    () => {
-      return axios({
-        method: "post",
-        url: `https://carborn.site/api/user/${
-          markerArr[markerNum]?.AUTH === 1 ? "repair" : "inspect"
-        }/book`,
-        data:
-          markerArr[markerNum]?.AUTH === 1
-            ? {
-                car: {
-                  id: reserveInfo?.carId,
-                },
-                repairShop: {
-                  id: markerArr[markerNum]?.ID,
-                },
-                account: {
-                  id: JSON.parse(ObjString).userId,
-                },
-                content: reserveInfo?.content,
-                bookDt: reserveInfo?.date,
-              }
-            : {
-                car: {
-                  id: reserveInfo?.carId,
-                },
-                inspector: {
-                  id: markerArr[markerNum]?.ID,
-                },
-                account: {
-                  id: JSON.parse(ObjString).userId,
-                },
-                content: reserveInfo?.content,
-                bookDt: reserveInfo?.date,
-              },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-        },
-      });
-    },
-    {
-      onSuccess: () => {
-        navigate(
-          markerArr[markerNum]?.AUTH === 1
-            ? "/user/mypage/repair"
-            : "/user/mypage/inspector"
-        );
-      },
-    }
-  );
+  // const { mutate, isSuccess } = useMutation(
+  //   () => {
+  //     return axios({
+  //       method: "post",
+  //       url: `https://carborn.site/api/user/${
+  //         markerArr[markerNum]?.AUTH === 1 ? "repair" : "inspect"
+  //       }/book`,
+  //       data:
+  //         markerArr[markerNum]?.AUTH === 1
+  //           ? {
+  //               car: {
+  //                 id: reserveInfo?.carId,
+  //               },
+  //               repairShop: {
+  //                 id: markerArr[markerNum]?.ID,
+  //               },
+  //               account: {
+  //                 id: JSON.parse(ObjString).userId,
+  //               },
+  //               content: reserveInfo?.content,
+  //               bookDt: reserveInfo?.date,
+  //             }
+  //           : {
+  //               car: {
+  //                 id: reserveInfo?.carId,
+  //               },
+  //               inspector: {
+  //                 id: markerArr[markerNum]?.ID,
+  //               },
+  //               account: {
+  //                 id: JSON.parse(ObjString).userId,
+  //               },
+  //               content: reserveInfo?.content,
+  //               bookDt: reserveInfo?.date,
+  //             },
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //       },
+  //     });
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       navigate(
+  //         markerArr[markerNum]?.AUTH === 1
+  //           ? "/user/mypage/repair"
+  //           : "/user/mypage/inspector"
+  //       );
+  //     },
+  //   }
+  // );
 
-  const getApply = () => {
-    if (!reserveInfo?.carId || !reserveInfo?.content || !reserveInfo?.date) {
-      Toast.fire({
-        icon: "error",
-        title: "양식을 다 작성해주세요.",
-      });
-    } else {
-      mutate();
-    }
-  };
+  // const getApply = () => {
+  //   if (!reserveInfo?.carId || !reserveInfo?.content || !reserveInfo?.date) {
+  //     Toast.fire({
+  //       icon: "error",
+  //       title: "양식을 다 작성해주세요.",
+  //     });
+  //   } else {
+  //     mutate();
+  //   }
+  // };
   return (
     <>
-      <button
+      {/* <button
         style={{
           backgroundColor: "red",
           width: "100%",
@@ -104,7 +104,7 @@ function ApplyBtn({
         onClick={getApply}
       >
         신청하기
-      </button>
+      </button> */}
     </>
   );
 }

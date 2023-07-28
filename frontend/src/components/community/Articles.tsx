@@ -43,7 +43,7 @@ export default function Articles() {
 
   const navigate = useNavigate();
 
-  const URL = `https://carborn.site/api/user/community/list/${page}/10/0`;
+  // const URL = `https://carborn.site/api/user/community/list/${page}/10/0`;
   const ObjString: any = localStorage.getItem("login-token");
 
   const option = {
@@ -53,14 +53,14 @@ export default function Articles() {
     },
   };
 
-  const getArticles = useAPI("get", URL, option);
-  const { data, refetch } = useQuery("getArticles", () => getArticles, {
-    select: (res) => res?.data?.message,
-    onSuccess: (res) => setTotalPage(res?.totalPages),
-  });
-  useEffect(() => {
-    refetch();
-  }, [page]);
+  // const getArticles = useAPI("get", URL, option);
+  // const { data, refetch } = useQuery("getArticles", () => getArticles, {
+  //   select: (res) => res?.data?.message,
+  //   onSuccess: (res) => setTotalPage(res?.totalPages),
+  // });
+  // useEffect(() => {
+  //   refetch();
+  // }, [page]);
   return (
     <ThemeProvider theme={theme}>
       <Container sx={{ marginTop: "50px", width: "70vw" }}>
@@ -119,7 +119,7 @@ export default function Articles() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          {/* <TableBody>
             {data?.content?.map(
               ({ id, accountName, regDt, title }: MapType, idx: number) => (
                 <TableRow
@@ -152,7 +152,7 @@ export default function Articles() {
                 </TableRow>
               )
             )}
-          </TableBody>
+          </TableBody> */}
         </Table>
         <Stack spacing={2} alignItems="center" sx={{ mt: "15px", mb: "20px" }}>
           <Pagination

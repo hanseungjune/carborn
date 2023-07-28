@@ -81,31 +81,31 @@ function MarkerDetail({
   const [reviewBtn, setReviewBtn] = useState<boolean>(false);
   const ObjString: any = localStorage.getItem("login-token");
 
-  const REVIEW_API = `https://carborn.site/api/user/map/review/${
-    markerArr[markerNum]?.ID
-  }/${markerArr[markerNum]?.AUTH}/${1}/${100}`;
+  // const REVIEW_API = `https://carborn.site/api/user/map/review/${
+  //   markerArr[markerNum]?.ID
+  // }/${markerArr[markerNum]?.AUTH}/${1}/${100}`;
 
-  const getReviewAPI = useAPI("get", REVIEW_API, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-    },
-  });
+  // const getReviewAPI = useAPI("get", REVIEW_API, {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //   },
+  // });
 
-  const [{ data, refetch }] = useQueries([
-    {
-      queryKey: "get-review",
-      queryFn: () => getReviewAPI,
-      retry: false,
-      select: (data: any) => {
-        return data?.data?.message?.content;
-      },
-      keepPreviousData: true,
-      cacheTime: 0,
-      refetchOnWindowFocus: true,
-      refetchOnMount: true,
-    },
-  ]);
+  // const [{ data, refetch }] = useQueries([
+  //   {
+  //     queryKey: "get-review",
+  //     queryFn: () => getReviewAPI,
+  //     retry: false,
+  //     select: (data: any) => {
+  //       return data?.data?.message?.content;
+  //     },
+  //     keepPreviousData: true,
+  //     cacheTime: 0,
+  //     refetchOnWindowFocus: true,
+  //     refetchOnMount: true,
+  //   },
+  // ]);
 
   // 파노라마 옵션
   var panoramaOptions = {
@@ -120,13 +120,13 @@ function MarkerDetail({
       fov: 100,
     },
   };
-  useEffect(() => {
-    // 파노라마 생성
-    if (roadViewRef.current) {
-      var pano = new naver.maps.Panorama(roadViewRef.current, panoramaOptions);
-    }
-    refetch();
-  }, [markerArr[markerNum]?.LAT, markerArr[markerNum]?.LNG]);
+  // useEffect(() => {
+  //   // 파노라마 생성
+  //   if (roadViewRef.current) {
+  //     var pano = new naver.maps.Panorama(roadViewRef.current, panoramaOptions);
+  //   }
+  //   refetch();
+  // }, [markerArr[markerNum]?.LAT, markerArr[markerNum]?.LNG]);
 
   // 나가기 버튼 클릭
   const exit = () => {
@@ -164,23 +164,27 @@ function MarkerDetail({
       {!reviewBtn ? (
         <MarkerDetailInfo markerNum={markerNum} markerArr={markerArr} />
       ) : (
-        data.map((DATA: any, index: number) => {
-          return (
-            <>
-              <MarkerDetailReview
-                data={DATA}
-                key={
-                  DATA.accountId +
-                  DATA.content +
-                  DATA.point +
-                  DATA.regDt +
-                  DATA.uptDt
-                }
-              />
-              {/* {index === data?.length - 1 ? <div css={arrow}></div> : null} */}
-            </>
-          );
-        })
+        <div>
+          <span>하하핳핳</span>
+        </div>
+        // data.map((DATA: any, index: number) => {
+        //   return (
+        //     <>
+        //       <MarkerDetailReview
+        //         data={DATA}
+        //         key={
+        //           DATA.accountId +
+        //           DATA.content +
+        //           DATA.point +
+        //           DATA.regDt +
+        //           DATA.uptDt
+        //         }
+        //       />
+        //       {/* {index === data?.length - 1 ? <div css={arrow}></div> : null} */}
+        //     </>
+        //   );
+        // }
+        // )
       )}
     </div>
   );

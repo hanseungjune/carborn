@@ -20,7 +20,7 @@ const rightContent = css`
   margin-top: 10vh;
 `;
 
-const API = `https://carborn.site/api/user/car`;
+// const API = `https://carborn.site/api/user/car`;
 
 function FormArea({
   registrationInfo,
@@ -54,11 +54,11 @@ function FormArea({
         setRegistrationInfo={setRegistrationInfo}
       />
       {/* 등록하기 버튼 */}
-      <RegistrationBtn
+      {/* <RegistrationBtn
         registrationInfo={registrationInfo}
         setRegistrationInfo={setRegistrationInfo}
         API={API}
-      />
+      /> */}
     </div>
   );
 }
