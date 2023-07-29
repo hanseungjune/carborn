@@ -74,7 +74,6 @@ const LoginPages = () => {
   };
 
   if (status === 200 && accessToken) {
-    localStorage.setItem("accessToken", accessToken);
     switch (userType) {
       case USER:
         navigate("/");

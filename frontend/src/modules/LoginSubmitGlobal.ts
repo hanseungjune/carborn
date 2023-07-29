@@ -7,6 +7,7 @@ import {
   LoginSubmitState,
 } from "../type/auth/LoginType";
 import { SagaIterator } from "redux-saga";
+import { TokenStorage } from "../hooks/TokenStorage";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -40,6 +41,7 @@ const initialState: LoginSubmitState = {
 };
 
 const HTTPS_API = process.env.REACT_APP_API_MAIN_URL;
+const tokenStorage = new TokenStorage();
 
 function* loginSaga(action: LoginRequestAction): SagaIterator {
   try {
@@ -48,7 +50,13 @@ function* loginSaga(action: LoginRequestAction): SagaIterator {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(action.payload),
     });
+    
     const data: any = yield call([result, result.json]);
+    
+    if(data.accessToken) {
+        tokenStorage.setToken(data.accessToken)
+    }
+
     yield put(loginSuccess(data));
   } catch (error: any) {
     yield put(loginFailure(error));
@@ -57,7 +65,7 @@ function* loginSaga(action: LoginRequestAction): SagaIterator {
 
 function* logoutSaga(): SagaIterator {
   try {
-    localStorage.removeItem("accessToken");
+    tokenStorage.removeToken();
     yield put(logout());
   } catch (error: any) {
     console.log(error);

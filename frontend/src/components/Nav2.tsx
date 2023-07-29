@@ -341,7 +341,7 @@ export default function Nav2(msg: any) {
             >
               셀프 정비
             </div>
-            {success || localToken ? (
+            {accessToken ? (
               <div
                 className="item"
                 onClick={(): void => navigate(`/user/mypage`)}
