@@ -46,12 +46,12 @@ export default function Articles() {
   // const URL = `https://carborn.site/api/user/community/list/${page}/10/0`;
   const ObjString: any = localStorage.getItem("login-token");
 
-  const option = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${JSON.parse(ObjString).value}`,
-    },
-  };
+  // const option = {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${JSON.parse(ObjString).value}`,
+  //   },
+  // };
 
   // const getArticles = useAPI("get", URL, option);
   // const { data, refetch } = useQuery("getArticles", () => getArticles, {

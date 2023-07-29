@@ -63,18 +63,18 @@ export default function HistoryModal({ id }: Props) {
     },
   };
 
-  const getDetailData = useAPI("get", URL, option);
-  const { data } = useQuery(queryKey, () => getDetailData, {
-    cacheTime: 1000 * 300,
-    staleTime: 1000 * 300,
-    select: (data) => {
-      return data.data.message;
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-    enabled: false,
-  });
+  // const getDetailData = useAPI("get", URL, option);
+  // const { data } = useQuery(queryKey, () => getDetailData, {
+  //   cacheTime: 1000 * 300,
+  //   staleTime: 1000 * 300,
+  //   select: (data) => {
+  //     return data.data.message;
+  //   },
+  //   onError: (err) => {
+  //     console.log(err);
+  //   },
+  //   enabled: false,
+  // });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -113,26 +113,26 @@ export default function HistoryModal({ id }: Props) {
               <tr>
                 <td>처리 전</td>
                 <td>
-                  <img
+                  {/* <img
                     src={`https://carborn.site/images/${data?.beforeImgNm}`}
                     alt="before"
                     width="200px"
                     height="auto"
-                  />
+                  /> */}
                 </td>
               </tr>
               <tr>
                 <td>처리 후</td>
                 <td>
-                  <img
+                  {/* <img
                     src={`https://carborn.site/images/${data?.afterImgNm}`}
                     alt="after"
                     width="200px"
                     height="auto"
-                  />
+                  /> */}
                 </td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td>차종</td>
                 <td>
                   {isGarage
@@ -167,7 +167,7 @@ export default function HistoryModal({ id }: Props) {
               <tr>
                 <td>금액</td>
                 <td>{isGarage ? data?.repairPrice : data?.inspectPrice}</td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </DialogContent>

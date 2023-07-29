@@ -88,19 +88,19 @@ export default function CollapsibleTable() {
 
   const [selfHelp, setSelfHelp] = React.useState<any[]>([]);
 
-  React.useEffect(() => {
-    const fetchSelfData = async () => {
-      const response = await axios({
-        method: "GET",
-        url: `${CARBORN_SITE}/api/user/self-repair/list/1/30`,
-        headers: {
-          [ContentType]: applicationjson,
-        },
-      });
-      setSelfHelp(response.data.message.content);
-    };
-    fetchSelfData();
-  }, []);
+  // React.useEffect(() => {
+  //   const fetchSelfData = async () => {
+  //     const response = await axios({
+  //       method: "GET",
+  //       url: `${CARBORN_SITE}/api/user/self-repair/list/1/30`,
+  //       headers: {
+  //         [ContentType]: applicationjson,
+  //       },
+  //     });
+  //     setSelfHelp(response.data.message.content);
+  //   };
+  //   fetchSelfData();
+  // }, []);
 
   return (
     <TableContainer component={Paper}>

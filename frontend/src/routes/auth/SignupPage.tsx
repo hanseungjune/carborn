@@ -25,8 +25,8 @@ import { useNavigate } from "react-router-dom";
 import CustomAlert from "../../components/auth/signup/modal/CustomAlert";
 import ReCAPTCHA from "react-google-recaptcha";
 import Nav2 from "../../components/Nav2";
-import { StyleLoginBoxDiv } from "./LoginPage";
 import swal from "sweetalert";
+import { StyleSignUpBoxDiv } from "../../style/auth/SignupPageStyle";
 
 // CSS 타입
 export interface StyleGoRegisterProps
@@ -101,7 +101,7 @@ export const StyleSignUpBigContainer = styled.div`
   }
 `;
 
-export const StyleSignUpBoxDiv = styled.div`
+export const StyleSignUpPageBoxDiv = styled.div`
   padding-top: 2rem;
   width: 23vw;
   display: flex;
@@ -340,9 +340,9 @@ const SignupPages: React.FC = () => {
         setSelectedFiles={setSelectedFiles}
       />
       <StyleSignUpCenterDiv>
-        <StyleLoginBoxDiv border={isRecaptcha ? "#d23131" : "grey"}>
+        <StyleSignUpBoxDiv border={isRecaptcha ? "#d23131" : "grey"}>
           {selectedButton === USER ? (
-            <StyleSignUpBoxDiv>
+            <StyleSignUpPageBoxDiv>
               <SignUpUserName
                 setSignupUserFormData={setSignupUserFormData}
                 signupUserFormData={signupUserFormData}
@@ -375,9 +375,9 @@ const SignupPages: React.FC = () => {
                 setIsValid={setIsValid}
                 isValid={isValid}
               />
-            </StyleSignUpBoxDiv>
+            </StyleSignUpPageBoxDiv>
           ) : (
-            <StyleSignUpBoxDiv>
+            <StyleSignUpPageBoxDiv>
               <SignUpCompanyTypeButton
                 setSignupCompanyFormData={setSignupCompanyFormData}
                 signupCompanyFormData={signupCompanyFormData}
@@ -425,7 +425,7 @@ const SignupPages: React.FC = () => {
                 isFiles={isFiles}
                 setSelectedFiles={setSelectedFiles}
               />
-            </StyleSignUpBoxDiv>
+            </StyleSignUpPageBoxDiv>
           )}
           {isSignUpBtn ? (
             <ReCAPTCHA
@@ -444,7 +444,7 @@ const SignupPages: React.FC = () => {
           >
             회원가입 하기
           </StyleGoRegister>
-        </StyleLoginBoxDiv>
+        </StyleSignUpBoxDiv>
       </StyleSignUpCenterDiv>
       {isAlert ? (
         <div>

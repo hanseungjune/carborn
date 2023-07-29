@@ -27,7 +27,7 @@ import {
   USER_SMS_AUTH_ACTION,
   USER_VERIFICATION_CHECK_REQUEST,
   COMPANY_SMS_AUTH_ACTION,
-  companySmsAuthSaga
+  companySmsAuthSaga,
 } from "../verificationNumberModule";
 import {
   createInspectorReviewSaga,
@@ -46,11 +46,15 @@ import {
   userModifyPasswordSaga,
   USER_MODIFY_PASSWORD_REQUEST,
 } from "./../modifyPasswordModule";
-
-
+//
+import { LOGIN_SUCCESS, watchLoginSaga } from "../LoginSubmitGlobal";
+import { all, fork } from "redux-saga/effects";
 
 export default function* rootSaga() {
+  yield all([fork(watchLoginSaga)]);
+  //
   yield takeEvery(LOGIN_REQUEST, takeLoginSaga);
+  yield takeEvery(LOGIN_SUCCESS, watchLoginSaga);
   yield takeLatest(LOGOUT_REQUEST, takeLogoutSaga);
   yield takeEvery(GET_TERMSOFUSE, GetAgreementSaga);
   yield takeLatest(USERID_CHECK, UserIdCheckSaga);

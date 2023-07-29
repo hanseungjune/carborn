@@ -68,20 +68,20 @@ export default function DetailModal({ id, status }: Props) {
     },
   };
 
-  const getRepairDetail = useAPI("get", URL, option);
+  // const getRepairDetail = useAPI("get", URL, option);
 
-  const { data } = useQuery(queryKey, () => getRepairDetail, {
-    cacheTime: 1000 * 300,
-    staleTime: 1000 * 300,
-    select: (data) => {
-      return data.data.message;
-    },
-    onError: (error: Error) => {
-      console.log(error);
-    },
+  // const { data } = useQuery(queryKey, () => getRepairDetail, {
+  //   cacheTime: 1000 * 300,
+  //   staleTime: 1000 * 300,
+  //   select: (data) => {
+  //     return data.data.message;
+  //   },
+  //   onError: (error: Error) => {
+  //     console.log(error);
+  //   },
 
-    enabled: false,
-  });
+  //   enabled: false,
+  // });
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -121,7 +121,7 @@ export default function DetailModal({ id, status }: Props) {
           <table css={tableStyle}>
             <thead></thead>
             <tbody>
-              <tr>
+              {/* <tr>
                 <td>아이디</td>
                 <td>{data?.accountId}</td>
               </tr>
@@ -148,7 +148,7 @@ export default function DetailModal({ id, status }: Props) {
               <tr>
                 <td>내용</td>
                 <td> : {data?.content}</td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
 

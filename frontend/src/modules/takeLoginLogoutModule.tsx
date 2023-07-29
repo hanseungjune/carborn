@@ -1,5 +1,4 @@
 import { call, put, select } from "redux-saga/effects";
-import { loginInputType } from "../routes/auth/LoginPage";
 import { LoginApi, LogoutApi } from "../lib/api";
 import swal from "sweetalert";
 
@@ -13,7 +12,7 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 
 // 액션 타입 생성 함수
-export const loginAction = (payload: loginInputType) => ({
+export const loginAction = (payload: any) => ({
   type: LOGIN_REQUEST,
   payload,
 });
@@ -43,36 +42,36 @@ export const logoutFailureAction = (error: string) => ({
 export function* takeLoginSaga(
   action: ReturnType<typeof loginAction>
 ): Generator<any, void, unknown> {
-  try {
-    const response: any = yield call(
-      LoginApi,
-      action.payload as loginInputType
-    );
+  // try {
+  //   const response: any = yield call(
+  //     LoginApi,
+  //     action.payload as any
+  //   );
 
-    // 로그인 동시 접속 처리
-    const isLoggedIn = yield select((state:any) => state.LoginOutReducer.success);
-    if (isLoggedIn) {
-      swal("동시 접속 오류", "다른 사용자가 이미 로그인한 상태입니다.", "error");
-      return;
-    }
+  //   // 로그인 동시 접속 처리
+  //   const isLoggedIn = yield select((state:any) => state.LoginOutReducer.success);
+  //   if (isLoggedIn) {
+  //     swal("동시 접속 오류", "다른 사용자가 이미 로그인한 상태입니다.", "error");
+  //     return;
+  //   }
 
-    if (response.status === 200) {
-      const Obj = {
-        // 여기에 토큰을 넣어야 함.
-        value: response.data.message.token.accessToken,
-        expire: Date.now() + 1800000,
-        userId: action.payload.loginid,
-        // 이거도 받아야함
-        accountType: response.data.message.auth,
-      };
-      const ObjString = JSON.stringify(Obj);
-      localStorage.setItem("login-token", ObjString);
-    }
-    yield put(loginSuccessAction(response.data.message));
-  } catch (error: any) {
-    console.log(error);
-    yield put(loginFailureAction(error.message));
-  }
+  //   if (response.status === 200) {
+  //     const Obj = {
+  //       // 여기에 토큰을 넣어야 함.
+  //       value: response.data.message.token.accessToken,
+  //       expire: Date.now() + 1800000,
+  //       userId: action.payload.loginid,
+  //       // 이거도 받아야함
+  //       accountType: response.data.message.auth,
+  //     };
+  //     const ObjString = JSON.stringify(Obj);
+  //     localStorage.setItem("login-token", ObjString);
+  //   }
+  //   yield put(loginSuccessAction(response.data.message));
+  // } catch (error: any) {
+  //   console.log(error);
+  //   yield put(loginFailureAction(error.message));
+  // }
 }
 
 // 로그아웃 사가

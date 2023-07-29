@@ -59,28 +59,28 @@ export default function InsuranceHistory() {
     },
   };
 
-  const getInsuranceHistory = useAPI("get", URL, option);
+  // const getInsuranceHistory = useAPI("get", URL, option);
 
-  const { data, refetch } = useQuery(queryKey, () => getInsuranceHistory, {
-    cacheTime: 1000 * 300,
-    staleTime: 1000 * 300,
-    select: (data) => {
-      return data.data.message;
-    },
-    onError: (err) => {
-      console.log(err, "에러");
-    },
+  // const { data, refetch } = useQuery(queryKey, () => getInsuranceHistory, {
+  //   cacheTime: 1000 * 300,
+  //   staleTime: 1000 * 300,
+  //   select: (data) => {
+  //     return data.data.message;
+  //   },
+  //   onError: (err) => {
+  //     console.log(err, "에러");
+  //   },
 
-    suspense: true,
-  });
+  //   suspense: true,
+  // });
 
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
-  useEffect(() => {
-    refetch();
-    console.log(data, "데이터");
-  }, [page]);
+  // useEffect(() => {
+  //   refetch();
+  //   console.log(data, "데이터");
+  // }, [page]);
   return (
     <div css={container}>
       <TableContainer component={Paper}>
@@ -94,7 +94,7 @@ export default function InsuranceHistory() {
               <TableCell align="center">자세히 보기</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          {/* <TableBody>
             {data?.content?.map(
               (
                 { id, carVin, category, content, insuranceDt }: MapType,
@@ -113,16 +113,16 @@ export default function InsuranceHistory() {
                 </TableRow>
               )
             )}
-          </TableBody>
+          </TableBody> */}
           <TableFooter>
             <TableRow>
-              <TablePagination
+              {/* <TablePagination
                 count={data.totalElements}
                 page={page}
                 rowsPerPage={rowsPerPage}
                 onPageChange={handleChangePage}
                 rowsPerPageOptions={[]}
-              />
+              /> */}
             </TableRow>
           </TableFooter>
         </Table>

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { LoginInputProps } from "../../../routes/auth/LoginPage";
 import { StyledInput, StyleNameLabel } from "../signup/SignUpUserName";
 import swal from "sweetalert";
 
@@ -11,7 +10,7 @@ const StyleLoginInputDiv = styled.div`
 `;
 
 // 로그인 아이디 데이터 받아오는 컴포넌트
-const LoginID = ({ setLoginInput, loginInput }: LoginInputProps) => {
+const LoginID = ({ setLoginInput, loginInput }: any) => {
   // 값이 변화함에 따라서 바뀜
   const handleChange = ({
     target: { value },

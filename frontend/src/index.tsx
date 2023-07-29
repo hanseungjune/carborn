@@ -28,6 +28,11 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
+if (process.env.NODE_ENV === "development") {
+  const { worker } = require("./mock/browser");
+  worker.start();
+}
+
 sagaMiddleware.run(rootSaga);
 
 const root = ReactDOM.createRoot(

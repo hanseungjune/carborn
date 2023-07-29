@@ -8,7 +8,7 @@ import PrivacyComponent from "../../components/auth/termsofuse/PrivacyComponent"
 import axios from "axios";
 import { CARBORN_SITE } from "../../lib/api";
 import Nav2 from "../../components/Nav2";
-import { StyleLoginBoxDiv } from "./LoginPage";
+import { StyleGetAgreementBoxDiv } from "../../style/auth/GetAgreementStyle";
 
 export const StyleTermsContainer = styled.div`
   width: 100vw;
@@ -252,7 +252,7 @@ const GetAgreementPage = () => {
     <StyleTermsContainer>
       <Nav2 />
       <StyleTermsCenterDiv>
-        <StyleLoginBoxDiv border={
+        <StyleGetAgreementBoxDiv border={
               isButtonDisabled(isChecked1, isChecked2) ? "grey" : "#d23131"
             }>
           <StyleTermsOfUseTitleDiv>
@@ -299,7 +299,7 @@ const GetAgreementPage = () => {
           >
             회원가입 하기
           </StyleGoSignUpBtn>
-        </StyleLoginBoxDiv>
+        </StyleGetAgreementBoxDiv>
       </StyleTermsCenterDiv>
     </StyleTermsContainer>
   );

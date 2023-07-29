@@ -61,20 +61,20 @@ export default function ReviewModal({ id }: Props) {
       Authorization: `Bearer ${JSON.parse(ObjString).value}`,
     },
   };
-  const getRepairDetail = useAPI("get", URL, option);
+  // const getRepairDetail = useAPI("get", URL, option);
 
-  const { data } = useQuery(queryKey, () => getRepairDetail, {
-    cacheTime: 1000 * 300,
-    staleTime: 1000 * 300,
-    select: (data) => {
-      return data.data.message;
-    },
-    onError: (error: Error) => {
-      console.log(error);
-    },
+  // const { data } = useQuery(queryKey, () => getRepairDetail, {
+  //   cacheTime: 1000 * 300,
+  //   staleTime: 1000 * 300,
+  //   select: (data) => {
+  //     return data.data.message;
+  //   },
+  //   onError: (error: Error) => {
+  //     console.log(error);
+  //   },
 
-    enabled: false,
-  });
+  //   enabled: false,
+  // });
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -87,28 +87,28 @@ export default function ReviewModal({ id }: Props) {
   };
 
   let score;
-  switch (data?.point) {
-    case 0:
-      score = "☆☆☆☆☆";
-      break;
-    case 1:
-      score = "★☆☆☆☆";
-      break;
-    case 2:
-      score = "★★☆☆☆";
-      break;
-    case 3:
-      score = "★★★☆☆";
-      break;
-    case 4:
-      score = "★★★★☆";
-      break;
-    case 5:
-      score = "★★★★★";
-      break;
-    default:
-      score = "";
-  }
+  // switch (data?.point) {
+  //   case 0:
+  //     score = "☆☆☆☆☆";
+  //     break;
+  //   case 1:
+  //     score = "★☆☆☆☆";
+  //     break;
+  //   case 2:
+  //     score = "★★☆☆☆";
+  //     break;
+  //   case 3:
+  //     score = "★★★☆☆";
+  //     break;
+  //   case 4:
+  //     score = "★★★★☆";
+  //     break;
+  //   case 5:
+  //     score = "★★★★★";
+  //     break;
+  //   default:
+  //     score = "";
+  // }
   return (
     <div>
       <Button
@@ -132,9 +132,9 @@ export default function ReviewModal({ id }: Props) {
             <thead></thead>
             <tbody>
               <tr>
-                <td>
+                {/* <td>
                   {data ? data?.content : "아직 리뷰가 등록되지 않았습니다."}
-                </td>
+                </td> */}
               </tr>
               <tr>
                 <td css={{ color: "#ff9600", fontSize: "20px" }}>{score}</td>

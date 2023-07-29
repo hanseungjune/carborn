@@ -13,6 +13,9 @@ import { newPasswordReducer } from "./../newPasswordModule";
 import { createReviewReducer } from "./../createReviewModule";
 import { userModifyPasswordReducer } from "./../modifyPasswordModule";
 import { carListReducer } from "./../carListModule";
+// 패치해야댐
+import loginReducer from './../LoginGlobal';
+import { loginSubmitReducer } from './../LoginSubmitGlobal';
 
 const rootReducer = combineReducers({
   LoginOutReducer,
@@ -29,6 +32,10 @@ const rootReducer = combineReducers({
   companyinfoDeleteReducer,
   userModifyPasswordReducer,
   carListReducer,
+  loginReducer,
+  loginSubmitReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 export default rootReducer;

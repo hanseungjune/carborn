@@ -56,18 +56,18 @@ export default function InsuranceModal({ id }: Props) {
     },
   };
 
-  const getDetailData = useAPI("get", URL, option);
-  const { data }: any = useQuery(queryKey, () => getDetailData, {
-    cacheTime: 1000 * 300,
-    staleTime: 1000 * 300,
-    select: (data) => {
-      return data.data.message;
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-    enabled: false,
-  });
+  // const getDetailData = useAPI("get", URL, option);
+  // const { data }: any = useQuery(queryKey, () => getDetailData, {
+  //   cacheTime: 1000 * 300,
+  //   staleTime: 1000 * 300,
+  //   select: (data) => {
+  //     return data.data.message;
+  //   },
+  //   onError: (err) => {
+  //     console.log(err);
+  //   },
+  //   enabled: false,
+  // });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -97,18 +97,18 @@ export default function InsuranceModal({ id }: Props) {
         sx={{ minWidth: "8vw" }}
         maxWidth={false}
       >
-        <DialogTitle>
+        {/* <DialogTitle>
           <img
             src={`https://carborn.site/images/${data?.insuranceImgNm}`}
             height="200px"
             width="auto"
             alt="img"
           />
-        </DialogTitle>
+        </DialogTitle> */}
         <DialogContent>
           <table css={tableStyle}>
             <thead></thead>
-            <tbody>
+            {/* <tbody>
               <tr>
                 <td>사고 번호</td>
                 <td> : {data?.id}</td>
@@ -129,7 +129,7 @@ export default function InsuranceModal({ id }: Props) {
                 <td>차대 번호</td>
                 <td> : {data?.carVin}</td>
               </tr>
-            </tbody>
+            </tbody> */}
           </table>
         </DialogContent>
         <DialogActions>

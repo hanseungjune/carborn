@@ -68,29 +68,29 @@ export default function HistoryTable() {
       Authorization: `Bearer ${JSON.parse(ObjString).value}`,
     },
   };
-  const getHistoryData = useAPI("get", URL, option);
+  // const getHistoryData = useAPI("get", URL, option);
 
-  const { data, refetch } = useQuery(queryKey, () => getHistoryData, {
-    cacheTime: 1000 * 300,
-    staleTime: 1000 * 300,
-    select: (data) => {
-      // return data.data;
-      return data.data.message;
-    },
-    onError: (err) => {
-      console.log(err);
-    },
+  // const { data, refetch } = useQuery(queryKey, () => getHistoryData, {
+  //   cacheTime: 1000 * 300,
+  //   staleTime: 1000 * 300,
+  //   select: (data) => {
+  //     // return data.data;
+  //     return data.data.message;
+  //   },
+  //   onError: (err) => {
+  //     console.log(err);
+  //   },
 
-    suspense: true,
-  });
+  //   suspense: true,
+  // });
 
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
   };
-  console.log(data);
-  useEffect(() => {
-    refetch();
-  }, [page]);
+  // console.log(data);
+  // useEffect(() => {
+  //   refetch();
+  // }, [page]);
   return (
     <div css={container}>
       <TableContainer component={Paper}>
@@ -132,7 +132,7 @@ export default function HistoryTable() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          {/* <TableBody>
             {data?.content?.map(
               ({ id, regDt, repairDt, mileage }: MapType, idx: number) => (
                 <TableRow key={idx}>
@@ -157,8 +157,8 @@ export default function HistoryTable() {
                 </TableRow>
               )
             )}
-          </TableBody>
-          <TableFooter>
+          </TableBody> */}
+          {/* <TableFooter>
             <TableRow>
               <TablePagination
                 count={data.totalElements}
@@ -169,7 +169,7 @@ export default function HistoryTable() {
                 rowsPerPageOptions={[]}
               />
             </TableRow>
-          </TableFooter>
+          </TableFooter> */}
         </Table>
       </TableContainer>
     </div>
