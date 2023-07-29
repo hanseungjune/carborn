@@ -75,31 +75,31 @@ const container = css`
 `;
 
 export default function HomeCarsInfo() {
-  const URL = "https://carborn.site/";
+  // const URL = "https://carborn.site/";
 
-  const getRepairCount = useAPI("get", `${URL}api/user/repair/count`);
-  const getInspectorCount = useAPI("get", `${URL}api/user/inspector/count`);
-  const getCarCount = useAPI("get", `${URL}api/user/car/count`);
-  const getCarTradeCount = useAPI("get", `${URL}api/user/car-trade/count`);
-  const [{ data }, { data: data1 }, { data: data2 }, { data: data3 }] =
-    useQueries([
-      {
-        queryKey: "getRepairCount",
-        queryFn: () => getRepairCount,
-      },
-      {
-        queryKey: "getInspectorCount",
-        queryFn: () => getInspectorCount,
-      },
-      {
-        queryKey: "getCarCount",
-        queryFn: () => getCarCount,
-      },
-      {
-        queryKey: "getCarTradeCount",
-        queryFn: () => getCarTradeCount,
-      },
-    ]);
+  // const getRepairCount = useAPI("get", `${URL}api/user/repair/count`);
+  // const getInspectorCount = useAPI("get", `${URL}api/user/inspector/count`);
+  // const getCarCount = useAPI("get", `${URL}api/user/car/count`);
+  // const getCarTradeCount = useAPI("get", `${URL}api/user/car-trade/count`);
+  // const [{ data }, { data: data1 }, { data: data2 }, { data: data3 }] =
+  //   useQueries([
+  //     {
+  //       queryKey: "getRepairCount",
+  //       queryFn: () => getRepairCount,
+  //     },
+  //     {
+  //       queryKey: "getInspectorCount",
+  //       queryFn: () => getInspectorCount,
+  //     },
+  //     {
+  //       queryKey: "getCarCount",
+  //       queryFn: () => getCarCount,
+  //     },
+  //     {
+  //       queryKey: "getCarTradeCount",
+  //       queryFn: () => getCarTradeCount,
+  //     },
+  //   ]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -147,14 +147,14 @@ export default function HomeCarsInfo() {
             <div>The number of vehicles</div>
             <div className="cardDetail">
               <img src={carsImg} />
-              <p>{data2?.data?.message}</p>
+              {/* <p>{data2?.data?.message}</p> */}
             </div>
           </div>
           <div className="card">
             <div>The number of transactions</div>
             <div className="cardDetail">
               <img src={transactionImg} />
-              <p>{data3?.data?.message}</p>
+              {/* <p>{data3?.data?.message}</p> */}
             </div>
           </div>
         </div>
@@ -163,14 +163,14 @@ export default function HomeCarsInfo() {
             <div>Repair-shop partners</div>
             <div className="cardDetail">
               <img src={engineerImg} />
-              <p>{data?.data?.message}</p>
+              {/* <p>{data?.data?.message}</p> */}
             </div>
           </div>
           <div className="card">
             <div>Inspection partners</div>
             <div className="cardDetail">
               <img src={gumsuImg} />
-              <p>{data1?.data?.message}</p>
+              {/* <p>{data1?.data?.message}</p> */}
             </div>
           </div>
         </div>

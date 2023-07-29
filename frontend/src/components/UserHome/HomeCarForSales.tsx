@@ -176,19 +176,19 @@ const imgBox = css`
 `;
 
 export default function HomeCarForSales() {
-  const URL = `http://carborn.site/api/user/car-regist/list`;
-  const getCarForSale = useAPI("get", URL);
+  // const URL = `http://carborn.site/api/user/car-regist/list`;
+  // const getCarForSale = useAPI("get", URL);
   const imgWidth = window.innerWidth * 0.15125;
   const [x, setX] = useState<number>(0);
   const navigate = useNavigate();
 
-  const { data } = useQuery("getCarForSale", () => getCarForSale, {
-    select: (data) => {
-      return data.data.message;
-    },
-  });
+  // const { data } = useQuery("getCarForSale", () => getCarForSale, {
+  //   select: (data) => {
+  //     return data.data.message;
+  //   },
+  // });
 
-  const len = data?.length;
+  // const len = data?.length;
   const cars = css`
     transition: all ease 80ms 0s;
     display: flex;
@@ -201,9 +201,9 @@ export default function HomeCarForSales() {
       display: none;
     }
   `;
-  const moveRight = (): void => {
-    if (-x < (len - 3) * imgWidth) setX((prev) => prev - imgWidth);
-  };
+  // const moveRight = (): void => {
+  //   if (-x < (len - 3) * imgWidth) setX((prev) => prev - imgWidth);
+  // };
   const moveLeft = (): void => {
     if (x + imgWidth < 0) {
       setX((prev) => prev + imgWidth);
@@ -238,13 +238,13 @@ export default function HomeCarForSales() {
       <hr className="saleHr" />
       <hr className="saleHr" />
       <div css={imgBox}>
-        <div className="Btn rightBtn" onClick={moveRight}>
+        {/* <div className="Btn rightBtn" onClick={moveRight}>
           <p>&#10095;</p>
-        </div>
+        </div> */}
         <div className="Btn leftBtn" onClick={moveLeft}>
           <p>&#10094;</p>
         </div>
-        <div css={cars} ref={carsRef}>
+        {/* <div css={cars} ref={carsRef}>
           {data?.map((data: Maptype, idx: number): any => (
             <div
               className="img"
@@ -281,7 +281,7 @@ export default function HomeCarForSales() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
