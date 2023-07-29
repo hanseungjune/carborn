@@ -10,6 +10,8 @@ import {
 } from "../modules/takeLoginLogoutModule";
 import Logo from "../assets/Logo.png";
 import swal from "sweetalert";
+import { RootState } from "../modules/root/rootReducer";
+import { LOGOUT_REQUEST } from "../modules/LoginSubmitGlobal";
 
 const container = css`
   width: 100%;
@@ -227,16 +229,24 @@ export default function Nav2(msg: any) {
     } else if (location.pathname === `/user/self-repair`) {
       setTitle("CheckList");
     } else if (location.pathname === `user/mypage/mycarinfo/${carId}/detail`) {
-      setTitle("CarDetail")
+      setTitle("CarDetail");
     }
   }, [location.pathname, setTitle, title]);
 
-  // 로그아웃
-  const handleLogout = () => {
-    dispatch(logoutAction());
-  };
-
   const isLoggedIn = useSelector((state: any) => state.LoginOutReducer.success);
+
+  // 리팩토링
+  const accessToken = useSelector(
+    (state: RootState) => state.loginSubmitReducer.data?.accessToken
+  );
+
+  // 리팩토링
+  const LogoutSubmit = async () => {
+    if (accessToken) {
+      dispatch({ type: LOGOUT_REQUEST });
+      navigate("/login");
+    }
+  };
 
   useEffect(() => {
     if (isLoggedIn === undefined) {
@@ -250,12 +260,6 @@ export default function Nav2(msg: any) {
   const Obj = ObjString ? JSON.parse(ObjString) : null;
   const { success } = useSelector((state: any) => state.LoginOutReducer);
   const localToken = Obj?.value;
-
-  useEffect(() => {
-    if (isLoggedIn === true && location.pathname === "/") {
-      window.location.reload();
-    }
-  }, [isLoggedIn]);
 
   // 유저아이디랑 토큰 가져오기
   useEffect(() => {
@@ -282,10 +286,10 @@ export default function Nav2(msg: any) {
     <div css={container}>
       <div className="section1">
         <div className="loginInfo">
-          {localToken ? (
+          {accessToken ? (
             <div
               className="logo"
-              onClick={handleLogout}
+              onClick={LogoutSubmit}
               css={{ cursor: "pointer" }}
             >
               LOGOUT

@@ -1,21 +1,19 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import styled from "@emotion/styled";
 import { StyledInput, StyleNameLabel } from "../signup/SignUpUserName";
+import { LoginInput } from "../../../type/auth/LoginType";
 
-// CSS
 const StyleLoginInputDiv = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-// 로그인 비밀번호 데이터 받아오는 컴포넌트
-const LoginPassword = ({ setLoginInput, loginInput }: any) => {
-  // 값이 변화함에 따라서 바뀜
-  const handleChange = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginInput({ ...loginInput, loginpassword: value });
-  };
+export interface LoginPasswordType {
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  loginInput: LoginInput;
+}
+
+const LoginPassword = ({ handleInputChange, loginInput }: LoginPasswordType) => {
 
   return (
     <StyleLoginInputDiv>
@@ -26,7 +24,7 @@ const LoginPassword = ({ setLoginInput, loginInput }: any) => {
         name="loginpassword"
         autoComplete="off"
         placeholder="Password"
-        onChange={handleChange}
+        onChange={handleInputChange}
         value={loginInput.loginpassword}
       />
     </StyleLoginInputDiv>

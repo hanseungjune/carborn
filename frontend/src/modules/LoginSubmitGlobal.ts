@@ -11,6 +11,8 @@ import { SagaIterator } from "redux-saga";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const LOGOUT = "LOGOUT";
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 
 export const loginRequest = (payload: LoginInput) => ({
   type: LOGIN_REQUEST,
@@ -27,6 +29,10 @@ export const loginFailure = (error: Error) => ({
   error,
 });
 
+export const logout = () => ({
+  type: LOGOUT,
+});
+
 const initialState: LoginSubmitState = {
   data: null,
   loading: false,
@@ -36,8 +42,6 @@ const initialState: LoginSubmitState = {
 const HTTPS_API = process.env.REACT_APP_API_MAIN_URL;
 
 function* loginSaga(action: LoginRequestAction): SagaIterator {
-  console.log(action);
-  console.log(HTTPS_API);
   try {
     const result: Response = yield call(fetch, `${HTTPS_API}/login`, {
       method: "POST",
@@ -51,8 +55,21 @@ function* loginSaga(action: LoginRequestAction): SagaIterator {
   }
 }
 
+function* logoutSaga(): SagaIterator {
+  try {
+    localStorage.removeItem("accessToken");
+    yield put(logout());
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
 export function* watchLoginSaga() {
   yield takeLatest(LOGIN_REQUEST, loginSaga);
+}
+
+export function* watchLogoutSaga() {
+  yield takeLatest(LOGOUT_REQUEST, logoutSaga);
 }
 
 export const loginSubmitReducer = (
@@ -77,6 +94,13 @@ export const loginSubmitReducer = (
         ...state,
         loading: false,
         error: action.error,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        loading: false,
+        data: null,
+        error: null,
       };
     default:
       return state;

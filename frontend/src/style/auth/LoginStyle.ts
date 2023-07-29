@@ -31,6 +31,7 @@ export const StyleLoginBoxDiv = styled.div<IStyleLoginBoxDivProps>`
   width: 30vw;
   margin-top: 5rem;
   margin-bottom: 5rem;
+  padding-bottom: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -54,7 +55,7 @@ export const StyleLoginBtn = styled.button<StyleLoginSignUpBtnProps>`
   height: 2.5rem;
   margin-bottom: 1rem;
   margin-left: 0.1rem;
-  color: black;
+  color: white;
   border-radius: 5px;
   font-weight: 900;
   font-size: 1rem;

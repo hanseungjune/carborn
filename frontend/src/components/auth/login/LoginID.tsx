@@ -1,32 +1,23 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import styled from "@emotion/styled";
 import { StyledInput, StyleNameLabel } from "../signup/SignUpUserName";
-import swal from "sweetalert";
+import { LoginInput } from "../../../type/auth/LoginType";
 
-// CSS
 const StyleLoginInputDiv = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-// 로그인 아이디 데이터 받아오는 컴포넌트
-const LoginID = ({ setLoginInput, loginInput }: any) => {
-  // 값이 변화함에 따라서 바뀜
-  const handleChange = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    const regex = /^[a-z0-9_]+$/;
-    if (value === '' || regex.test(value)) {
-      setLoginInput({ ...loginInput, loginid: value });
-    } else {
-      swal("아이디 오류", "영소문자 및 숫자와 _ 만 기입 가능합니다.", "error");
-      setLoginInput({ ...loginInput, loginid: "" });
-    }
-  };
+export interface LoginIDType {
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  loginInput: LoginInput;
+}
+
+const LoginID = ({ handleInputChange, loginInput }: LoginIDType) => {
 
   return (
     <StyleLoginInputDiv>
-      <StyleNameLabel htmlFor="loginid">아이디</StyleNameLabel>
+      <StyleNameLabel htmlFor="loginid">아이디<span></span></StyleNameLabel>
       <StyledInput
         type="text"
         id="loginid"
@@ -35,8 +26,8 @@ const LoginID = ({ setLoginInput, loginInput }: any) => {
         placeholder="ID"
         minLength={5}
         maxLength={20}
-        onChange={handleChange}
         value={loginInput.loginid}
+        onChange={handleInputChange}
       />
     </StyleLoginInputDiv>
   );

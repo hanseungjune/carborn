@@ -47,11 +47,11 @@ import {
   USER_MODIFY_PASSWORD_REQUEST,
 } from "./../modifyPasswordModule";
 //
-import { LOGIN_SUCCESS, watchLoginSaga } from "../LoginSubmitGlobal";
+import { LOGIN_SUCCESS, watchLoginSaga, watchLogoutSaga } from "../LoginSubmitGlobal";
 import { all, fork } from "redux-saga/effects";
 
 export default function* rootSaga() {
-  yield all([fork(watchLoginSaga)]);
+  yield all([fork(watchLoginSaga), fork(watchLogoutSaga)]);
   //
   yield takeEvery(LOGIN_REQUEST, takeLoginSaga);
   yield takeEvery(LOGIN_SUCCESS, watchLoginSaga);
