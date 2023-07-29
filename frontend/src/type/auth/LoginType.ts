@@ -1,6 +1,10 @@
 import { ButtonHTMLAttributes } from "react";
-import { SET_LOGIN_INPUT } from "../../modules/LoginGlobal";
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from "../../modules/takeLoginLogoutModule";
+import { SET_INPUT_ERROR, SET_LOGIN_INPUT } from "../../modules/LoginGlobal";
+import {
+  LOGIN_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+} from "../../modules/takeLoginLogoutModule";
 import { LOGOUT } from "../../modules/LoginSubmitGlobal";
 
 // 로그인 인풋 데이터 타입
@@ -34,6 +38,7 @@ export interface LoginInput {
 
 export interface LoginState {
   loginInput: LoginInput;
+  inputError: string;
 }
 
 interface SetLoginInputAction {
@@ -41,7 +46,12 @@ interface SetLoginInputAction {
   payload: LoginInput;
 }
 
-export type LoginActionTypes = SetLoginInputAction;
+interface SetInputErrorAction {
+  type: typeof SET_INPUT_ERROR;
+  payload: string;
+}
+
+export type LoginActionTypes = SetLoginInputAction | SetInputErrorAction;
 
 export interface LoginRequestAction {
   type: typeof LOGIN_REQUEST;

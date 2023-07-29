@@ -3,7 +3,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { StyleSignUpInputDiv } from "../../../routes/auth/SignupPage";
 import { SignupFormData } from "./SignUpButton";
 import swal from "sweetalert";
-import IsValidComponent from './../../isValid/IsValidComponent';
+import IsValidComponent from "./../../isValid/IsValidComponent";
 
 //타입 지정
 export type SignUpUserNameProps = {
@@ -32,18 +32,19 @@ export const StyleNameLabel = styled.label`
   font-weight: 900;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const StyleIsValidSpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   & > span {
     color: #d23131;
     font-size: 0.7rem;
   }
-`
+`;
 
 const SignUpUserName = ({
   setSignupUserFormData,
@@ -57,8 +58,8 @@ const SignUpUserName = ({
   const handleUserName = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const regex = /^[가-힣ㄱ-ㅎㅏ-ㅣ\s]*$/;
-    if(e.target.value === '') {
-      setMessage(" ")
+    if (e.target.value === "") {
+      setMessage(" ");
     }
 
     if (regex.test(e.target.value)) {
@@ -105,12 +106,15 @@ const SignUpUserName = ({
         name: "",
       });
     }
-  }
+  };
 
   return (
     <StyleSignUpInputDiv>
       <StyleIsValidSpaceBetween>
-        <StyleNameLabel htmlFor="username">이름<IsValidComponent isValid={isAlert}/></StyleNameLabel>
+        <StyleNameLabel htmlFor="username">
+          이름
+          <IsValidComponent isValid={isAlert} />
+        </StyleNameLabel>
         {isAlert ? null : <span>{message}</span>}
       </StyleIsValidSpaceBetween>
       <StyledInput

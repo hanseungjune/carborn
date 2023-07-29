@@ -16,7 +16,7 @@ import {
 import { StyleLoginAnotherLink } from "./SearchID";
 import { useNavigate } from "react-router";
 import { RootState } from "../../modules/root/rootReducer";
-import { setLoginInput } from "../../modules/LoginGlobal";
+import { setInputError, setLoginInput } from "../../modules/LoginGlobal";
 import { loginRequest } from "../../modules/LoginSubmitGlobal";
 
 const USER = 0;
@@ -44,26 +44,17 @@ const LoginPages = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const regex = /^[a-z0-9_]+$/;
-    console.log(name, value);
-    if (name === "loginid") {
-      if (value === "" || regex.test(value)) {
-        dispatch(setLoginInput({ ...loginInput, [name]: value }));
-      } else {
-        
-        dispatch(setLoginInput({ ...loginInput, [name]: "" }));
-      }
-    } else if (name === "loginpassword") {
-      if (value === "" || regex.test(value)) {
-        dispatch(setLoginInput({ ...loginInput, [name]: value }));
-      } else {
-        swal(
-          "아이디 오류",
-          "영소문자 및 숫자와 _ 만 기입 가능합니다.",
-          "error"
-        );
-        dispatch(setLoginInput({ ...loginInput, [name]: "" }));
-      }
+    if (
+      (name === "loginid" || name === "loginpassword") &&
+      !regex.test(value) &&
+      value !== ""
+    ) {
+      dispatch(
+        setInputError("한글과 영대문자는 안되요!")
+      );
+      dispatch(setLoginInput({ ...loginInput, [name]: "" }));
     } else {
+      dispatch(setInputError(""));
       dispatch(setLoginInput({ ...loginInput, [name]: value }));
     }
   };
@@ -114,7 +105,11 @@ const LoginPages = () => {
               loginInput={loginInput}
             />
             <StyleLoginBtn
-              backgroundColor={loginInput.loginid && loginInput.loginpassword ? "#d23131" : "grey"}
+              backgroundColor={
+                loginInput.loginid && loginInput.loginpassword
+                  ? "#d23131"
+                  : "grey"
+              }
               disabled={!loginInput.loginid || !loginInput.loginpassword}
               type="submit"
             >

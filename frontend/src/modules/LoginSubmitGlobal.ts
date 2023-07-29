@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeLatest } from "redux-saga/effects";
 import {
   LoginInput,
   LoginRequestAction,
@@ -8,6 +8,8 @@ import {
 } from "../type/auth/LoginType";
 import { SagaIterator } from "redux-saga";
 import { TokenStorage } from "../hooks/TokenStorage";
+import { setLoginInput } from "./LoginGlobal";
+import { RootState } from "./root/rootReducer";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -66,6 +68,7 @@ function* loginSaga(action: LoginRequestAction): SagaIterator {
 function* logoutSaga(): SagaIterator {
   try {
     tokenStorage.removeToken();
+    yield put(setLoginInput({ loginid: '', loginpassword: '' }));
     yield put(logout());
   } catch (error: any) {
     console.log(error);
