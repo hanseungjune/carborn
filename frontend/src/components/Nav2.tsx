@@ -1,7 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import carBackground from "../assets/carBackground2.jpg";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,7 +16,8 @@ import {
 import Logo from "../assets/Logo.png";
 import swal from "sweetalert";
 import { RootState } from "../modules/root/rootReducer";
-import { LOGOUT_REQUEST } from "../modules/LoginSubmitGlobal";
+import { LOGOUT_REQUEST, logout } from "../modules/LoginSubmitGlobal";
+import { TokenStorage } from "../hooks/TokenStorage";
 
 const container = css`
   width: 100%;
@@ -233,60 +239,20 @@ export default function Nav2(msg: any) {
     }
   }, [location.pathname, setTitle, title]);
 
-  const isLoggedIn = useSelector((state: any) => state.LoginOutReducer.success);
-
   // 리팩토링
-  const accessToken = useSelector(
-    (state: RootState) => state.loginSubmitReducer.data?.accessToken
-  );
-
-  // 리팩토링
+  const tokenStorage = new TokenStorage();
+  const localStorageData = tokenStorage.getToken();
+  const [token, setToken] = useState(localStorageData?.accessToken);
   const LogoutSubmit = async () => {
-    if (accessToken) {
-      dispatch({ type: LOGOUT_REQUEST });
-      navigate("/login");
-    }
+    dispatch({ type: LOGOUT_REQUEST });
+    setToken(null);
   };
-
-  useEffect(() => {
-    if (isLoggedIn === undefined) {
-      dispatch(loginFailureReset());
-      navigate("/login");
-    }
-  }, [isLoggedIn]);
-
-  // 다른 nav로
-  const ObjString: any = localStorage.getItem("login-token");
-  const Obj = ObjString ? JSON.parse(ObjString) : null;
-  const { success } = useSelector((state: any) => state.LoginOutReducer);
-  const localToken = Obj?.value;
-
-  // 유저아이디랑 토큰 가져오기
-  useEffect(() => {
-    const ObjString = localStorage.getItem("login-token");
-    let Obj = null;
-    if (ObjString) {
-      Obj = JSON.parse(ObjString);
-      if (Date.now() > Obj.expire) {
-        dispatch(logoutAction());
-        swal(
-          "로그인 시간 만료",
-          "로그아웃 되었습니다. 다시 로그인 해주세요.",
-          "error"
-        );
-        if (isLoggedIn === undefined) {
-          dispatch(loginFailureReset());
-          navigate("/login");
-        }
-      }
-    }
-  });
 
   return (
     <div css={container}>
       <div className="section1">
         <div className="loginInfo">
-          {accessToken ? (
+          {token ? (
             <div
               className="logo"
               onClick={LogoutSubmit}
@@ -341,7 +307,7 @@ export default function Nav2(msg: any) {
             >
               셀프 정비
             </div>
-            {accessToken ? (
+            {token ? (
               <div
                 className="item"
                 onClick={(): void => navigate(`/user/mypage`)}

@@ -5,9 +5,15 @@ import {
   Routes,
   Route,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { JustRoutes, PrivateRoutes } from "./routes";
+import { TokenStorage } from "./hooks/TokenStorage";
+import { useEffect } from "react";
+import swal from "sweetalert";
+import { useDispatch } from "react-redux";
+import { LOGOUT_REQUEST } from "./modules/LoginSubmitGlobal";
 
 const globalStyles = css`
   @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
@@ -61,9 +67,9 @@ export const PrivateRoute = ({
 );
 
 function App() {
-  // 토큰 가져오기
-  const ObjString: any = localStorage.getItem("login-token");
-  const token = JSON.parse(ObjString);
+  const tokenStorage = new TokenStorage();
+  const localStorageData = tokenStorage.getToken();
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -80,7 +86,7 @@ function App() {
                 key={index}
                 path={route.path}
                 element={
-                  token ? (
+                  localStorageData ? (
                     route.element
                   ) : (
                     <Navigate to={{ pathname: "/login" }} />

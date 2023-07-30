@@ -4,6 +4,7 @@ import {
   LOGIN_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
 } from "../../modules/takeLoginLogoutModule";
 import { LOGOUT } from "../../modules/LoginSubmitGlobal";
 
@@ -73,11 +74,17 @@ export interface LogoutAction {
   error: Error;
 }
 
+export interface LogoutSuccessAction {
+  type: typeof LOGOUT_SUCCESS;
+  error: Error;
+}
+
 export type LoginSubmitActionTypes =
   | LoginRequestAction
   | LoginSuccessAction
   | LoginFailureAction
-  | LogoutAction;
+  | LogoutAction
+  | LogoutSuccessAction;
 
 export interface LoginSubmitState {
   data: LoginResponse | null;

@@ -9,13 +9,13 @@ import {
 import { SagaIterator } from "redux-saga";
 import { TokenStorage } from "../hooks/TokenStorage";
 import { setLoginInput } from "./LoginGlobal";
-import { RootState } from "./root/rootReducer";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGOUT = "LOGOUT";
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 
 export const loginRequest = (payload: LoginInput) => ({
   type: LOGIN_REQUEST,
@@ -36,6 +36,10 @@ export const logout = () => ({
   type: LOGOUT,
 });
 
+export const logoutSuccess = () => ({
+  type: LOGOUT_SUCCESS,
+});
+
 const initialState: LoginSubmitState = {
   data: null,
   loading: false,
@@ -52,13 +56,12 @@ function* loginSaga(action: LoginRequestAction): SagaIterator {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(action.payload),
     });
-    
-    const data: any = yield call([result, result.json]);
-    
-    if(data.accessToken) {
-        tokenStorage.setToken(data.accessToken)
-    }
 
+    const data: any = yield call([result, result.json]);
+    if (data) {
+      tokenStorage.setToken(JSON.stringify(data));
+    }
+    yield put(setLoginInput({ loginid: "", loginpassword: "" }));
     yield put(loginSuccess(data));
   } catch (error: any) {
     yield put(loginFailure(error));
@@ -67,9 +70,15 @@ function* loginSaga(action: LoginRequestAction): SagaIterator {
 
 function* logoutSaga(): SagaIterator {
   try {
-    tokenStorage.removeToken();
-    yield put(setLoginInput({ loginid: '', loginpassword: '' }));
-    yield put(logout());
+    const result = yield call(fetch, `${HTTPS_API}/logout`, {
+      method: 'GET',
+    })
+
+    const data: any = yield call([result, result.json]);
+    if (data.status === 200) {
+      tokenStorage.removeToken();
+      yield put(logout());
+    }
   } catch (error: any) {
     console.log(error);
   }

@@ -1,21 +1,22 @@
 export class TokenStorage {
-    #nekotsseacce = '';
+  #nekotsseacce = "";
 
-    constructor() {
-        this.#nekotsseacce = localStorage.getItem('accessToken') || '';
-    }
+  constructor() {
+    this.#nekotsseacce = localStorage.getItem("accessToken") || "";
+  }
 
-    setToken(token:string) {
-        this.#nekotsseacce = token;
-        localStorage.setItem('accessToken', token)
-    }
+  setToken(token: string) {
+    this.#nekotsseacce = token;
+    localStorage.setItem("accessToken", token);
+  }
 
-    getToken() {
-        return this.#nekotsseacce
-    }
+  getToken() {
+    let protectedToken = this.#nekotsseacce;
+    return protectedToken ? JSON.parse(protectedToken) : null;
+  }
 
-    removeToken() {
-        this.#nekotsseacce = '';
-        localStorage.removeItem('accessToken');
-    }
+  removeToken() {
+    this.#nekotsseacce = "";
+    localStorage.removeItem("accessToken");
+  }
 }

@@ -27,6 +27,7 @@ export const handlers = [
 
     if (user) {
       const accessToken = "exampleAccessToken";
+      const expire = Date.now() + 0.3 * 60 * 1000;
 
       return res(
         ctx.status(200),
@@ -34,6 +35,7 @@ export const handlers = [
           status: 200,
           accessToken: accessToken,
           userType: user.userType,
+          expire: expire
         })
       );
     } else {
@@ -46,4 +48,10 @@ export const handlers = [
       );
     }
   }),
+  rest.get("https://carborn.site/api/logout", (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({ status: 200})
+    )
+  })
 ];

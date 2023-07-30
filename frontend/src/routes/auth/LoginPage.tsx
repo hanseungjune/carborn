@@ -1,6 +1,6 @@
 import LoginID from "../../components/auth/login/LoginID";
 import LoginPassword from "../../components/auth/login/LoginPassword";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Nav2 from "./../../components/Nav2";
@@ -49,9 +49,7 @@ const LoginPages = () => {
       !regex.test(value) &&
       value !== ""
     ) {
-      dispatch(
-        setInputError("한글과 영대문자는 안되요!")
-      );
+      dispatch(setInputError("한글과 영대문자는 안되요!"));
       dispatch(setLoginInput({ ...loginInput, [name]: "" }));
     } else {
       dispatch(setInputError(""));
@@ -64,31 +62,33 @@ const LoginPages = () => {
     dispatch(loginRequest(loginInput));
   };
 
-  if (status === 200 && accessToken) {
-    switch (userType) {
-      case USER:
-        navigate("/");
-        break;
-      case REPAIR:
-        navigate("/garage");
-        break;
-      case INSPECTOR:
-        navigate("/inspector");
-        break;
-      case INSURANCE:
-        navigate("/insurance");
-        break;
-      default:
-        navigate("/login");
-        break;
+  useEffect(() => {
+    if (status === 200 && accessToken) {
+      switch (userType) {
+        case USER:
+          navigate("/");
+          break;
+        case REPAIR:
+          navigate("/garage");
+          break;
+        case INSPECTOR:
+          navigate("/inspector");
+          break;
+        case INSURANCE:
+          navigate("/insurance");
+          break;
+        default:
+          navigate("/login");
+          break;
+      }
+    } else if (status === 401) {
+      swal(
+        "로그인 실패",
+        "아이디와 비밀번호 정보가 일치 하지 않습니다.",
+        "error"
+      );
     }
-  } else if (status === 401) {
-    swal(
-      "로그인 실패",
-      "아이디와 비밀번호 정보가 일치 하지 않습니다.",
-      "error"
-    );
-  }
+  }, [status, accessToken, userType, navigate]);
 
   return (
     <StyleLoginContainer>
