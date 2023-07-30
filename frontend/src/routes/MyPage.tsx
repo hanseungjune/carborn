@@ -15,6 +15,7 @@ import {
   StyleMypageCardImg,
   StyleMypageCards,
 } from "../style/mypage/MyPageStyle";
+import { memo } from "react";
 const tokenStorage = new TokenStorage();
 const localStorageData = tokenStorage.getToken();
 const cardInfo = [
@@ -74,6 +75,26 @@ const cardInfo = [
   },
 ];
 
+export interface CardType {
+  card: {
+    path: string;
+    imgSrc: any;
+    alt: string;
+    text: string;
+  };
+}
+
+const Card = memo(({ card }: CardType) => (
+  <StyleMypageCards>
+    <Link to={card.path}>
+      <StyleMypageCardImg>
+        <img src={card.imgSrc} alt={card.alt} />
+      </StyleMypageCardImg>
+      <p>{card.text}</p>
+    </Link>
+  </StyleMypageCards>
+));
+
 const MyPage = () => {
   return (
     <div>
@@ -81,14 +102,7 @@ const MyPage = () => {
       <StyleMyPageContainer>
         <StyleMyPageDiv>
           {cardInfo.map((card, index) => (
-            <StyleMypageCards key={index}>
-              <Link to={card.path}>
-                <StyleMypageCardImg>
-                  <img src={card.imgSrc} alt={card.alt} />
-                </StyleMypageCardImg>
-                <p>{card.text}</p>
-              </Link>
-            </StyleMypageCards>
+            <Card key={index} card={card} />
           ))}
         </StyleMyPageDiv>
       </StyleMyPageContainer>
@@ -96,4 +110,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default memo(MyPage);

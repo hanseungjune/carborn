@@ -1,109 +1,76 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import carBackground from "../assets/carBackground2.jpg";
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loginFailureReset,
-  logoutAction,
-} from "../modules/takeLoginLogoutModule";
 import Logo from "../assets/Logo.png";
-import swal from "sweetalert";
-import { RootState } from "../modules/root/rootReducer";
-import { LOGOUT_REQUEST, logout } from "../modules/LoginSubmitGlobal";
+import { LOGOUT_REQUEST } from "../modules/LoginSubmitGlobal";
+import { container } from "../style/mypage/MyPageStyle";
+import { useMemo, useEffect, useState, useCallback } from "react";
 import { TokenStorage } from "../hooks/TokenStorage";
 
-const container = css`
-  width: 100%;
-  height: 50vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: black;
-  position: relative;
+const PAGE_TITLES: { [key: string]: string } = {
+  "/": "Car-Born Home",
+  "/login": "Login",
+  "/myvehicle/registration": "Car Registration",
+  "/user/mypage": "MyPage",
+  "/user/mypage/mycarinfo": "MyCarInfo",
+  "/user/mypage/repair": "MyRepairHistory",
+  "/user/mypage/buycontent": "MyPurchaseHistory",
+  "/user/mypage/sellcontent": "MySalesHistory",
+  "/user/mypage/inspector": "MyInspectorHistory",
+  "/user/mypage/insurance": "MyInsuranceHistory",
+  "/getagreement": "TermsofUse",
+  "/signup": "SignUp",
+  "/searchid": "SearchID",
+  "/searchid/searchidcomplete": "SearchID Complete",
+  "/passwordresetcheck": "SearchPassword",
+  "/passwordresetcheck/passwordreset": "ResetPassword",
+  "/passwordresetcheck/passwordreset/passwordcomplete": "Reset Complete",
+  "/user/mypage/community": "MyPostsHistory",
+  "/user/mypage/userpasswordmodify": "ResetPassword",
+  "/user/community": "Community",
+  "/user/car/list": "CarList",
+  "/user/car/sale": "CarSaleRegister",
+  "/user/car": "MyCarRegister",
+  "/user/community/write": "NewArticleWrite",
+  "/user/self-repair": "CheckList",
+};
 
-  .logoImg {
-    cursor: pointer;
-  }
-  .section1 {
-    width: 100%;
-    height: 4vh;
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    .loginInfo {
-      align-items: center;
-      display: flex;
-      justify-content: end;
-      height: 100%;
-      width: 80%;
-      background-color: black;
-      color: white;
-      div {
-        margin: 0 20px;
-      }
-      font-size: 16px;
-    }
-  }
-
-  .menuBar {
-    width: 80%;
-    height: 13.5vh;
-    display: flex;
-    color: white;
-    .logo {
-      flex: 4;
-      display: flex;
-      align-items: center;
-    }
-    .menu {
-      font-size: 20px;
-      font-weight: 550;
-      flex: 6;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-evenly;
-    }
-    .item {
-      cursor: pointer;
-      &:hover {
-        font-size: 22px;
-        transition: all 0.2s;
-      }
-      transition: all 0.2s;
-    }
-  }
-  .location {
-    position: relative;
-    color: white;
-    font-size: 40px;
-    font-weight: bolder;
-    margin-bottom: 10px;
-    width: 80%;
-    margin-bottom: 20px;
-  }
-`;
+const DYNAMIC_PAGE_TITLES = [
+  { path: "/user/mypage/mycarinfo/:carId/detail", title: "MyCarInfo" },
+  {
+    path: "/user/mypage/repair/:resultId/completedetail",
+    title: "MyRepairDetail",
+  },
+  {
+    path: "/user/mypage/repair/:bookId/bookdetail",
+    title: "MyRepairReserve",
+  },
+  {
+    path: "/user/mypage/inspector/:resultId/completedetail",
+    title: "MyInspectorDetail",
+  },
+  {
+    path: "/user/mypage/inspector/:bookId/bookdetail",
+    title: "MyInspectorReserve",
+  },
+  {
+    path: "/user/mypage/insurance/:resultId/completedetail",
+    title: "MyInsuranceDetail",
+  },
+  { path: "/user/car/:carId/:id", title: "DetailCarInfo" },
+  { path: "/user/mypage/mycarinfo/:carId/detail", title: "CarDetail" },
+];
 
 export default function Nav2(msg: any) {
-  const { carId: CARID, id: ID } = useParams();
+  const [title, setTitle] = useState("");
   const navigate = useNavigate();
-  // Nav 타이틀, 로그인 확인 여부
-  const [title, setTitle] = useState<string>("Home");
-  // location.pathname마다 다른 타이틀 가져가게 하려고
   const location = useLocation();
-  // 액션 실행
   const dispatch = useDispatch();
-  // 유저아이디랑 토큰 가져오기
-  const isHome = location.pathname == "/";
-  const isMap = location.pathname == "/user/map";
+  const isHome = location.pathname === "/";
+  const isMap = location.pathname === "/user/map";
+
   const section2 = css`
     width: ${isHome || isMap ? "100%" : "80%"};
     height: 45vh;
@@ -118,135 +85,86 @@ export default function Nav2(msg: any) {
     position: relative;
   `;
 
-  // 셀프 정비 도우미 위치
-  const FAQ = css`
-    z-index: 9999;
-    width: 3rem;
-    height: 3rem;
-    position: fixed;
-    bottom: 3.2rem;
-    right: 2.5rem;
-    cursor: pointer;
-    &:hover {
-      transition: all 0.3s;
-      transform: scale(1.2);
-    }
-  `;
-
-  // FAQ
-  const [isFAQ, setIsFAQ] = useState<boolean>(false);
-
-  // FAQ
-  // MUI //////////////////////////////////////
   useEffect(() => {
-    if (location.pathname === "/") {
-      setIsFAQ(true);
-    } else {
-      setIsFAQ(false);
-    }
-  }, [location.pathname, setIsFAQ]);
+    let title = PAGE_TITLES[location.pathname] || null;
 
-  const handleClickOpen = () => {
-    navigate("user/self-repair");
-  };
-
-  // 제목 얘기하기
-  useEffect(() => {
-    // 마이페이지 나의 차량정보 상세 페이지로 갈때,
-    const carId = localStorage.getItem("carId");
-    const resultId = localStorage.getItem("resultId");
-    const bookId = localStorage.getItem("bookId");
-    if (location.pathname === "/") {
-      setTitle("Car-Born Home");
-    } else if (location.pathname === "/login") {
-      setTitle("Login");
-    } else if (location.pathname === "/myvehicle/registration") {
-      setTitle("Car Registration");
-    } else if (location.pathname === `/user/mypage`) {
-      setTitle(`MyPage`);
-    } else if (location.pathname === `/user/mypage/mycarinfo`) {
-      setTitle(`MyCarInfo`);
-    } else if (location.pathname === `/user/mypage/mycarinfo/${carId}/detail`) {
-      setTitle(`MyCarInfo`);
-    } else if (location.pathname === `/user/mypage/repair`) {
-      setTitle(`MyRepairHistory`);
-    } else if (
-      location.pathname === `/user/mypage/repair/${resultId}/completedetail`
-    ) {
-      setTitle(`MyRepairDetail`);
-    } else if (
-      location.pathname === `/user/mypage/repair/${bookId}/bookdetail`
-    ) {
-      setTitle(`MyRepairReserve`);
-    } else if (location.pathname === `/user/mypage/buycontent`) {
-      setTitle(`MyPurchaseHistory`);
-    } else if (location.pathname === `/user/mypage/sellcontent`) {
-      setTitle(`MySalesHistory`);
-    } else if (location.pathname === `/user/mypage/inspector`) {
-      setTitle(`MyInspectorHistory`);
-    } else if (
-      location.pathname === `/user/mypage/inspector/${resultId}/completedetail`
-    ) {
-      setTitle(`MyInspectorDetail`);
-    } else if (
-      location.pathname === `/user/mypage/inspector/${bookId}/bookdetail`
-    ) {
-      setTitle(`MyInspectorReserve`);
-    } else if (location.pathname === `/user/mypage/insurance`) {
-      setTitle(`MyInsuranceHistory`);
-    } else if (location.pathname === `/getagreement`) {
-      setTitle(`TermsofUse`);
-    } else if (location.pathname === `/signup`) {
-      setTitle(`SignUp`);
-    } else if (location.pathname === `/searchid`) {
-      setTitle(`SearchID`);
-    } else if (location.pathname === `/searchid/searchidcomplete`) {
-      setTitle(`SearchID Complete`);
-    } else if (location.pathname === `/passwordresetcheck`) {
-      setTitle(`SearchPassword`);
-    } else if (location.pathname === `/passwordresetcheck/passwordreset`) {
-      setTitle(`ResetPassword`);
-    } else if (
-      location.pathname === `/passwordresetcheck/passwordreset/passwordcomplete`
-    ) {
-      setTitle(`Reset Complete`);
-    } else if (
-      location.pathname === `/user/mypage/insurance/${resultId}/completedetail`
-    ) {
-      setTitle(`MyInsuranceDetail`);
-    } else if (location.pathname === `/user/mypage/community`) {
-      setTitle(`MyPostsHistory`);
-    } else if (location.pathname === `/user/mypage/userpasswordmodify`) {
-      setTitle("ResetPassword");
-    } else if (location.pathname === "/user/community") {
-      setTitle("Community");
-    } else if (location.pathname.split("/")[2] === "community") {
-      setTitle("Community");
-    } else if (location.pathname === `/user/car/list`) {
-      setTitle("CarList");
-    } else if (location.pathname === `/user/car/${CARID}/${ID}`) {
-      setTitle("DetailCarInfo");
-    } else if (location.pathname === `/user/car/sale/${ID}`) {
-      setTitle("CarSaleRegister");
-    } else if (location.pathname === `/user/car`) {
-      setTitle("MyCarRegister");
-    } else if (location.pathname === `/user/community/write`) {
-      setTitle("NewArticleWrite");
-    } else if (location.pathname === `/user/self-repair`) {
-      setTitle("CheckList");
-    } else if (location.pathname === `user/mypage/mycarinfo/${carId}/detail`) {
-      setTitle("CarDetail");
+    if (!title) {
+      for (const { path, title: pageTitle } of DYNAMIC_PAGE_TITLES) {
+        const regex = new RegExp(
+          `^${path.replace(/:[^\s/]+/g, "([\\w-]+)")}$`,
+          "g"
+        );
+        const match = location.pathname.match(regex);
+        if (match) {
+          title = pageTitle;
+          break;
+        }
+      }
     }
-  }, [location.pathname, setTitle, title]);
+
+    setTitle(title || "Unknown Page");
+  }, [location.pathname, setTitle]);
 
   // 리팩토링
-  const tokenStorage = new TokenStorage();
-  const localStorageData = tokenStorage.getToken();
+  const tokenStorage = useMemo(() => new TokenStorage(), []);
+  const localStorageData = useMemo(() => tokenStorage.getToken(), [tokenStorage]);
   const [token, setToken] = useState(localStorageData?.accessToken);
-  const LogoutSubmit = async () => {
+  const LogoutSubmit = useCallback(async () => {
     dispatch({ type: LOGOUT_REQUEST });
     setToken(null);
-  };
+  }, [dispatch]);
+
+  const navigateToLogin = useCallback(() => {
+    navigate("/login");
+  }, [navigate]);
+
+  const navigateToHome = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
+
+  const navigateToCarList = useCallback(() => {
+    navigate("/user/car/list");
+  }, [navigate]);
+
+  const navigateToMap = useCallback(() => {
+    navigate("/user/map");
+  }, [navigate]);
+
+  const navigateToCommunity = useCallback(() => {
+    navigate("/user/community");
+  }, [navigate]);
+
+  const navigateToCar = useCallback(() => {
+    navigate("/user/car");
+  }, [navigate]);
+
+  const navigateToSelfRepair = useCallback(() => {
+    navigate("/user/self-repair");
+  }, [navigate]);
+
+  const navigateToMyPage = useCallback(() => {
+    navigate(`/user/mypage`);
+  }, [navigate]);
+
+  useEffect(() => {
+    let title = PAGE_TITLES[location.pathname] || null;
+
+    if (!title) {
+      for (const { path, title: pageTitle } of DYNAMIC_PAGE_TITLES) {
+        const regex = new RegExp(
+          `^${path.replace(/:[^\s/]+/g, "([\\w-]+)")}$`,
+          "g"
+        );
+        const match = location.pathname.match(regex);
+        if (match) {
+          title = pageTitle;
+          break;
+        }
+      }
+    }
+
+    setTitle(title || "Unknown Page");
+  }, [location.pathname]);
 
   return (
     <div css={container}>
@@ -263,7 +181,7 @@ export default function Nav2(msg: any) {
           ) : (
             <div
               className="logo"
-              onClick={(): void => navigate("/login")}
+              onClick={navigateToLogin}
               css={{ cursor: "pointer" }}
             >
               LOGIN
@@ -273,7 +191,7 @@ export default function Nav2(msg: any) {
       </div>
       <div css={section2} className="navSection2">
         <div className="menuBar">
-          <div className="logo" onClick={(): void => navigate("/")}>
+          <div className="logo" onClick={navigateToHome}>
             <img
               src={Logo}
               alt="logo"
@@ -283,35 +201,23 @@ export default function Nav2(msg: any) {
             />
           </div>
           <div className="menu">
-            <div
-              className="item"
-              onClick={(): void => navigate("/user/car/list")}
-            >
+            <div className="item" onClick={navigateToCarList}>
               거래
             </div>
-            <div className="item" onClick={(): void => navigate("/user/map")}>
+            <div className="item" onClick={navigateToMap}>
               예약
             </div>
-            <div
-              className="item"
-              onClick={(): void => navigate("/user/community")}
-            >
+            <div className="item" onClick={navigateToCommunity}>
               커뮤니티
             </div>
-            <div className="item" onClick={(): void => navigate("/user/car")}>
+            <div className="item" onClick={navigateToCar}>
               내 차 등록
             </div>
-            <div
-              className="item"
-              onClick={(): void => navigate("/user/self-repair")}
-            >
+            <div className="item" onClick={navigateToSelfRepair}>
               셀프 정비
             </div>
             {token ? (
-              <div
-                className="item"
-                onClick={(): void => navigate(`/user/mypage`)}
-              >
+              <div className="item" onClick={navigateToMyPage}>
                 마이페이지
               </div>
             ) : null}
@@ -321,9 +227,6 @@ export default function Nav2(msg: any) {
           {title}
         </div>
       </div>
-      {/* {isFAQ ? (
-        <img css={FAQ} src={FAQimg} onClick={handleClickOpen} alt="FAQ" />
-      ) : null} */}
     </div>
   );
 }

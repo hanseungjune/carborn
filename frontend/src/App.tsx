@@ -5,15 +5,10 @@ import {
   Routes,
   Route,
   Navigate,
-  useNavigate,
 } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { JustRoutes, PrivateRoutes } from "./routes";
 import { TokenStorage } from "./hooks/TokenStorage";
-import { useEffect } from "react";
-import swal from "sweetalert";
-import { useDispatch } from "react-redux";
-import { LOGOUT_REQUEST } from "./modules/LoginSubmitGlobal";
 
 const globalStyles = css`
   @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");

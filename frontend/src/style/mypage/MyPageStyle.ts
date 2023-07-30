@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const StyleMyPageContainer = styled.div`
@@ -98,5 +99,78 @@ export const StyleMypageCardImg = styled.div`
   margin-bottom: 4rem;
   img {
     width: 55%;
+  }
+`;
+
+export const container = css`
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  position: relative;
+
+  .logoImg {
+    cursor: pointer;
+  }
+  .section1 {
+    width: 100%;
+    height: 4vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    .loginInfo {
+      align-items: center;
+      display: flex;
+      justify-content: end;
+      height: 100%;
+      width: 80%;
+      background-color: black;
+      color: white;
+      div {
+        margin: 0 20px;
+      }
+      font-size: 16px;
+    }
+  }
+
+  .menuBar {
+    width: 80%;
+    height: 13.5vh;
+    display: flex;
+    color: white;
+    .logo {
+      flex: 4;
+      display: flex;
+      align-items: center;
+    }
+    .menu {
+      font-size: 20px;
+      font-weight: 550;
+      flex: 6;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    .item {
+      cursor: pointer;
+      &:hover {
+        font-size: 22px;
+        transition: all 0.2s;
+      }
+      transition: all 0.2s;
+    }
+  }
+  .location {
+    position: relative;
+    color: white;
+    font-size: 40px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+    width: 80%;
+    margin-bottom: 20px;
   }
 `;
